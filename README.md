@@ -9,7 +9,7 @@ Sovelluksen toiminnallisuuksia:
 * Pankkiin talletettuja liikkeitä voi selata ja hakea esim. kaikki tiettyä aluetta treenaavat liikket katseltavaksi.
 * Käyttäjä voi hakea treeniliikkeitä treenattavan lihaksen/alueen mukaan.
 * Sovelluksesta voi  koostaa valmiin satunnaisen treenin, johon voi määritellä liikkeiden määrän ja treenattavat alueet.
-* Käyttäjä voi tallettaa harjoituksen omalle tililleen ja tarkastella niitä myöhemmin.
+* Käyttäjä voi tallettaa harjoituksia omalle tililleen ja tarkastella niitä myöhemmin.
 
 Mahdollisia lisäominaisuuksia:
 * Käyttäjä voi poistaa omalle tililleen tallettamansa harjoituksen.
