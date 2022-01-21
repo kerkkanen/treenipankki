@@ -27,6 +27,6 @@ CREATE TABLE reviews (
     user_id INTEGER REFERENCES users,
     set_id INTEGER REFERENCES sets,
     trainer_level TEXT,
-    kettlebells INTEGER,
+    dumbells INTEGER,
     comment TEXT
 );
