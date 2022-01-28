@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Lisää liike syöttämällä tiedot</h3>
+<p>
+<form action="/add_move" methods="post">
+Liikkeen nimi: <input type="text" name="name">
+<p>
+Valitse liikkeen vaikutusalue(et):
+<p>
+<input type="checkbox" name="muscles" value="kädet"> kädet
+<input type="checkbox" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
+<input type="checkbox" name="muscles" value="selkä"> selkä
+<input type="checkbox" name="muscles" value="vatsa"> vatsa
+<input type="checkbox" name="muscles" value="koko vartalo"> koko vartalo
+<p>
+Liikkeen kuvaus ja lisähuomiot:
+<textarea name="description" rows="3" cols="50"></textarea>
+<p>
+<input type="submit" value="Luo">
+</form>
+
+{% endblock %}

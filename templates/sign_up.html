@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Luo uusi treenaaja</h3>
+<p>
+<form action="sign_up" method="post">
+Nimimerkki:<br><input type="text" name="name" minlength="1" maxlength="15">
+<p>
+Salasana:<br><input type="password" name="password">
+<p>
+Salasana uudelleen:<br><input type="password" name="password_again">
+<p>
+<input type="submit" value="Luo uusi tunnus">
+</form>
+
+{% endblock %}

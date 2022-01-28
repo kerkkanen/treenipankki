@@ -1,6 +1,42 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2> Tervetuloa treenipankkiin!</h2>
+<h2>Tervetuloa treenipankkiin!</h2>
+ 
+{% if session.user_id %}
+Kirjautuneena:<b> {{ session.user_name }}</b><br>
+<a href="/logout">Kirjaudu ulos</a>
+<p>
+<a href="/add_move">Lisää treeniliikkeitä pankiin</a> 
+<p>
+<a href="/own_sets">Omat treenisetit</a>
+
+{% else %}
+<p>
+Kirjautuneena käyttäjänä voit lisätä harjoituksia kaikkien nähtäville sekä tallettaa omat suosikkitreenisettisi.
+<p>
+<h3>Kirjaudu sisään</h3>
+<p>
+<form action="/login" method="post">
+Nimimerkki: <input type="text" name="name">
+<p>
+Salasana: <input type="password" name="password">
+<p>
+<input type="submit" value="Kirjaudu sisään">
+</form>
+<p>
+tai luo <a href="/sign_up">uusi tunnus</a>.
+{% endif %}
+<p>
+<p>
+Käyttäjien luomia treenisettejä:
+<ul>
+{% for sets in sets %}
+<li><a href="/set/ {{ set.id }}">{{ set.name }}</a>
+{% endfor %}
+</ul>
+
+
+
 
 {% endblock %}
