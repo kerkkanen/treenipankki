@@ -3,10 +3,10 @@
 
 <h3>Lisää liike syöttämällä tiedot</h3>
 <p>
-<form action="/add_move" methods="post">
-Liikkeen nimi: <input type="text" name="name">
+<form action="/add_move" method="post">
+<b>Liikkeen nimi:</b> <input type="text" name="name">
 <p>
-Valitse liikkeen vaikutusalue(et):
+<b>Valitse liikkeen vaikutusalue(et):</b>
 <p>
 <input type="checkbox" name="muscles" value="kädet"> kädet
 <input type="checkbox" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
@@ -14,8 +14,9 @@ Valitse liikkeen vaikutusalue(et):
 <input type="checkbox" name="muscles" value="vatsa"> vatsa
 <input type="checkbox" name="muscles" value="koko vartalo"> koko vartalo
 <p>
-Liikkeen kuvaus ja lisähuomiot:
-<textarea name="description" rows="3" cols="50"></textarea>
+<b>Liikkeen kuvaus ja lisähuomiot:</b>
+<p>
+<textarea name="description" rows="10" cols="50"></textarea>
 <p>
 <input type="submit" value="Luo">
 </form>

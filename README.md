@@ -2,6 +2,13 @@
 
 Sovelluksesta voi hakea eri lihasryhmiä harjoittavia kuntoiluliikkeitä ja koostaa haluamanlaisensa harjoituksen. Käyttäjä voi lisätä harjoitusliikkeitä ja hakea niitä esimerkiksi harjoitettavan lihasryhmän perusteella.
 
+**Tällä hetkellä ohjelmassa on toteutettuna seuraavat ominaisuudet:**
+
+* Käyttäjä voi luoda tunnuksen ja kirjautua sisään ja ulos
+* Kirjautunut käyttäjä voi lisätä treeniliikkeitä
+* Käyttäjä voi tarkastella treenipankin liikkeitä vaikkei olisi kirjautunutkaan
+
+
 Sovelluksen toiminnallisuuksia:
 
 * Käyttäjä voi luoda oman tunnuksen ja kirjautua sisään ja ulos.

@@ -29,14 +29,20 @@ tai luo <a href="/sign_up">uusi tunnus</a>.
 {% endif %}
 <p>
 <p>
-Käyttäjien luomia treenisettejä:
+<b>Käyttäjien luomia treenisettejä:</b>
 <ul>
 {% for sets in sets %}
-<li><a href="/set/ {{ set.id }}">{{ set.name }}</a>
+<li><a href="/set/{{ set.id }}">{{ set.name }}</a>
 {% endfor %}
 </ul>
-
-
+<p>
+<p>
+<b>Käyttäjien luomia treeniliikkeitä:</b>
+<ul>
+{% for move in moves %}
+<li><a href="/move/{{ move.id }}">{{ move.name }}</a>
+{% endfor %}
+</ul>
 
 
 {% endblock %}

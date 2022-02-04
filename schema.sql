@@ -6,6 +6,7 @@ CREATE TABLE users (
 
 CREATE TABLE moves (
     id SERIAL PRIMARY KEY,
+    creator_id, INTEGER REFERENCES users,
     name TEXT,
     muscles TEXT,
     description TEXT
@@ -13,11 +14,12 @@ CREATE TABLE moves (
 
 CREATE TABLE sets (
     id SERIAL PRIMARY KEY,
+    creator_id, INTEGER REFERENCES users,
     name TEXT,
     description TEXT
 );
 
-CREATE TABLE setmoves (
+CREATE TABLE movesets (
     set_id INTEGER REFERENCES sets,
     move_id INTEGER REFERENCES moves
 );

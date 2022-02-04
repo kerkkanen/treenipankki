@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Luotu liike:</h2>
+<p>
+<h3>{{ name }}</h3>
+<p></p>
+<b>Lihasryhmä:</b>
+<p>
+<ul>{{ muscles }}</ul>
+<p>
+<b>Kuvaus:</b>
+<p>
+<ul>{{ description }}</ul>
+<p>
+<b>Lisääjä:</b>
+<p>
+<ul>{{ creator }}</ul>
+<p>
+<p>
+<a href="/add_move">Lisää uusi liike</a>
+<p>
+<p>
+<p>
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

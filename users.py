@@ -20,6 +20,8 @@ def logout():
     del session["user_id"]
     del session["user_name"]
 
+def user_id():
+    return session.get("user_id", 0)
 
 def sign_up(name, password):
     hash_value = generate_password_hash(password)
