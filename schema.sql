@@ -1,12 +1,12 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    password TEXT,
+    password TEXT
 );
 
 CREATE TABLE moves (
     id SERIAL PRIMARY KEY,
-    creator_id, INTEGER REFERENCES users,
+    creator_id INTEGER REFERENCES users,
     name TEXT,
     muscles TEXT,
     description TEXT
@@ -14,7 +14,7 @@ CREATE TABLE moves (
 
 CREATE TABLE sets (
     id SERIAL PRIMARY KEY,
-    creator_id, INTEGER REFERENCES users,
+    creator_id INTEGER REFERENCES users,
     name TEXT,
     description TEXT
 );
