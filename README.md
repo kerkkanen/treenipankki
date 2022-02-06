@@ -11,7 +11,7 @@ Sovelluksesta voi hakea eri lihasryhmiä harjoittavia kuntoiluliikkeitä ja koos
 
 Tämänhetkistä versiota pääsee kokeilemaan Herokussa: https://treenipankki.herokuapp.com/
 
-Sovelluksen tulevia toiminnallisuuksia:
+**Sovelluksen tulevia toiminnallisuuksia:**
 
 * Käyttäjä voi luoda oman tunnuksen ja kirjautua sisään ja ulos.
 * Käyttäjä voi lisätä pankkiin (kaikkien käyttäjien käytettäväksi) lihaskuntoliikkeitä.
