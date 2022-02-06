@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% if session.user_id %}
 <h2>Treenisettien luominen</h2>
 <p>
 Valitse settiin lisättävät liikkeet. Voit lisätä yhteen settiin enintään 10 liikettä.
@@ -54,6 +55,7 @@ Valitse settiin lisättävät liikkeet. Voit lisätä yhteen settiin enintään 
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
+{% endif %}
 <a href="/">Etusivulle</a>
 {% endblock %}
 

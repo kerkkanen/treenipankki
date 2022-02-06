@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Luotu setti:</h2>
+<h2>{{ name }}</h2>(<b>Lisääjä:</b>{{ creator }})
 <p>
-<h3>{{ name }}</h3>
+<b>Kuvaus</b>
 <p>
 {{ description }}
 <p>
-<b>Liikkeet:</b>
+<b>Liikkeet</b>
 <p>
 {% for move in moves %}
 <ul>
@@ -17,11 +17,21 @@
 </ul>
 </ul>
 {% endfor %}
-<b>Lisääjä:</b> {{ creator }}
 <p>
-<b>Lisää omiin suosikkeihin:</b>
+{% if session.user_id %}
+<form action="/add_favourite" method="post">
+<input type="radio" name="add_set" value="{{ id }}">Lisää omiin suosikkeihin
 <p>
-<a href="/add_set">Lisää uusi setti</a>
+<input type="submit" value="Lisää">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/add_set">Lisää pankkiin uusi setti</a>
+<p>
+<a href="/profile/{{ session.user_id }}">Omat suosikit</a>
+{% endif %}
+<p>
+<a href="/setlist">Settilistaan</a>
 <p>
 <a href="/">Etusivulle</a>
 

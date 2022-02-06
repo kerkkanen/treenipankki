@@ -38,11 +38,8 @@ def sign_up():
     if request.method == "POST":
         name = request.form["name"]
 
-        if users.check_name:
-            return render_template("error.html", message="Tunnus on jo käytössä.")
-
-        if not 4 <= len(name) >= 20:
-            return render_template("error.html", message="Tunnuksen on oltava 4-20 merkkiä pitkä.")
+        if not 4 <= len(name) <= 20:
+            return render_template("error.html", message="Nimimerkin on oltava 4-20 merkkiä pitkä.")
 
         password = request.form["password"]
         password_again = request.form["password_again"]
@@ -66,8 +63,8 @@ def add_move():
 
         name = request.form["name"]
 
-        if moves.check_name:
-            return render_template("error.html", message=f"Pankista löytyy jo liike nimeltä {name}.")        
+        if moves.check_name(name):
+            return render_template("error.html", message=f"Pankista löytyy jo liike nimeltä {name}.")
         if len(name) < 4 or len(name) > 30:
             return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
 
@@ -82,6 +79,7 @@ def add_move():
         move_id = moves.add_move(users.user_id(), name, muscles, description)
 
         return redirect("/move/"+str(move_id))
+
 
 @app.route("/add_set", methods=["get", "post"])
 def add_set():
@@ -98,11 +96,10 @@ def add_set():
 
         name = request.form["name"]
 
-        if sets.check_name:
-            return render_template("error.html", message=f"Pankista löytyy jo setti nimeltä {name}.")   
+        if sets.check_name(name):
+            return render_template("error.html", message=f"Pankista löytyy jo setti nimeltä {name}.")
         if len(name) < 4 or len(name) > 30:
             return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
-        
 
         chosen = request.form.getlist("chosen")
         if not 2 <= len(chosen) <= 10:
@@ -127,25 +124,51 @@ def show_move(move_id):
 
     return render_template("move.html", id=move_id, name=info[0], creator=info[1], muscles=content[0], description=content[1])
 
-@app.route("/set/<int:set_id>")
+
+@app.route("/set/<int:set_id>", methods=["get", "post"])
 def show_set(set_id):
-    info = sets.get_info(set_id)
-    content = sets.get_content(set_id)
-    moveset_ids = sets.get_moveset_moves(set_id)
 
-    setmoves = []
-    for move_id in moveset_ids:
-        setmoves.append(moves.get_one_move(move_id[1]))
-        
+    if request.method == "GET":
+        info = sets.get_info(set_id)
+        content = sets.get_content(set_id)
+        moveset_ids = sets.get_moveset_moves(set_id)
 
-    return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=setmoves)
+        setmoves = []
+        for move_id in moveset_ids:
+            setmoves.append(moves.get_one_move(move_id[1]))
+
+        return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=setmoves)
+
+
+@app.route("/add_favourite", methods=["get", "post"])
+def add_favourite():
+
+    if request.method == "GET":
+        return render_template("index.html")
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        if request.method == "POST":
+            users.check_csrf()
+
+            set_id = request.form["add_set"]
+
+            if sets.check_favourite_id(set_id):
+                sets.add_favourite(users.user_id(), set_id)
+
+            return redirect("/set/"+str(set_id))
+
 
 @app.route("/profile/<int:id>", methods=["get"])
 def profile(id):
     if request.method == "GET":
-        correct_id = users.user_id()
-        if correct_id == id:
-            return render_template("profile.html", id=correct_id)
+        if users.user_id() == id:
+            favourite_sets_ids = sets.get_favouritelist(id)
+            favourites = []
+            for set_id in favourite_sets_ids:
+                favourites.append(sets.get_one_set(set_id[1]))
+            return render_template("profile.html", favourite_sets=favourites)
         else:
             return render_template("error.html", messager="Käyttäjällä ei oikeutta sivulle.")
 

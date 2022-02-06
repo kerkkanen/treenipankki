@@ -5,20 +5,17 @@
 <p>
 <p>
 
-Suosikkisettisi:
+<h3>Suosikkisettisi:</h3>
 <ul>
-{% for favourite_set in favourite_sets %}
-<li><a href="/favourite_sets/{{ set.id }}">{{ favourite_set.name }}</a>
+{% for set in favourite_sets %}
+<li><a href="/set/{{ set.id }}" title="set.description">{{ set.name }}</a>
 {% endfor %}
 </ul>
 <p>
-
 <a href="/add_set">Luo uusi setti</a>
 <p>
-<a href="/view_sets">Selaa valmiita settejä</a>
+<a href="/setlist">Selaa valmiita settejä</a>
 <p>
-<p>
-
 <a href="/">Etusivulle</a>
 <p>
 <a href="/logout">Kirjaudu ulos</a>

@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% if session.user_id %}
 <h3>Lisää uusi liike pankkiin</h3>
 <p>
 <form action="/add_move" method="post">
@@ -23,6 +24,7 @@
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
+{% endif %}
 <a href="/">Etusivulle</a>
 	
 {% endblock %}

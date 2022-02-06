@@ -1,7 +1,4 @@
-import os
 from db import db
-from flask import abort, request, session
-
 
 def add_move(creator_id, name, muscles, description):
     sql = """INSERT INTO moves (creator_id, name, muscles, description)
@@ -28,7 +25,7 @@ def get_one_move(move_id):
 
 
 def get_all():
-    sql = """SELECT id, name FROM moves ORDER BY name"""
+    sql = """SELECT * FROM moves ORDER BY name"""
     return db.session.execute(sql).fetchall()
 
 
