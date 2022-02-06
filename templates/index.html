@@ -10,17 +10,19 @@ Kirjautuneena:<b> {{ session.user_name }}</b>
 <p>
 <a href="/logout">Kirjaudu ulos</a>
 <p>
+<ul>
 <h3>Lisää sisältöä pankkiin</h3>
 <a href="/add_move">Uusi harjoitusliike</a>
 <p>
 <a href="/add_set">Uusi treenisetti</a>
+</ul>
 {% else %}
 <p>
 Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikkien nähtäville sekä tallettaa omat suosikkitreenisettisi.
 <p>
 <p>
-<ul>
 <h3>Kirjaudu sisään</h3>
+<ul>
 <p>
 <form action="/login" method="post">
 Nimimerkki: <input type="text" name="name">
@@ -35,9 +37,10 @@ tai luo <a href="/sign_up">uusi tunnus</a>.
 {% endif %}
 <p>
 <h3>Selaa treenipankin sisältöä</h3>
+<ul>
 <a href="/movelist">Yksittäiset harjoitusliikkeet</a>
 <p>
 <a href="/setlist">Treenisetit</a>
-
+</ul>
 
 {% endblock %}
