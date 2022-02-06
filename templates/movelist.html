@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Treeniliikepankki</h2>
+<p>
+Täällä voit selata treenaajien pankkiin lisäämiä harjoitusliikkeitä.
+<p>
+<b>Käyttäjien luomia treeniliikkeitä:</b>
+<ul>
+{% for move in moves %}
+<li><a href="/move/{{ move.id }}">{{ move.name }}</a>
+{% endfor %}
+</ul>
+<p>
+{% if session.user_id %}
+<a href="/add_move">Lisää uusi liike</a>
+<p>
+{% endif %}
+<a href="/">Etusivulle</a>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Luotu setti:</h2>
+<p>
+<h3>{{ name }}</h3>
+<p>
+{{ description }}
+<p>
+<b>Liikkeet:</b>
+<p>
+{% for move in moves %}
+<ul>
+<li><b>{{ move.name }}</b>, {{ move.muscles }}
+<ul>
+{{ move.description }}
+</ul>
+</ul>
+{% endfor %}
+<b>Lisääjä:</b> {{ creator }}
+<p>
+<b>Lisää omiin suosikkeihin:</b>
+<p>
+<a href="/add_set">Lisää uusi setti</a>
+<p>
+<a href="/">Etusivulle</a>
+
+{% endblock %}

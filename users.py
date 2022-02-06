@@ -33,3 +33,15 @@ def sign_up(name, password):
     except:
         return False
     return login(name, password)
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
+def check_name(name):
+    sql = "SELECT * FROM users WHERE name=:name"
+    result = db.session.execute(sql, {"name":name}).fetchall()
+    if len(result) == 0:
+        return False
+    else:
+        return True

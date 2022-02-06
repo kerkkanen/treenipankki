@@ -1,10 +1,16 @@
-	{% extends "layout.html" %}
+{% extends "layout.html" %}
 {% block content %}
 
-Virhe: {{ message }}
+<h3>Virhe: {{ message }}</h3>
 <p>
-Palaa <a href="/">etusivulle</a>.
+<a href="/">Etusivu</a>
+{% if session.user_id %}
+<a href="/profile/{{ session.user_id }}">Oma sivu</a>
 <p>
-Palaa<a href="/sign_up"> rekisteröintisivulle</a>
+<a href="/add_move">Lisää liike</a>
+<a href="/add_set">Lisää setti</a>
+{% else %}
+<a href="/sign_up">Luo uusi tunnus</a>
+{% endif %}
 
 {% endblock %}

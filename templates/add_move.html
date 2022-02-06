@@ -1,24 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h3>Lisää liike syöttämällä tiedot</h3>
+<h3>Lisää uusi liike pankkiin</h3>
 <p>
 <form action="/add_move" method="post">
 <b>Liikkeen nimi:</b> <input type="text" name="name">
+(Nimen oltava 4-30 merkkiä pitkä.)
 <p>
-<b>Valitse liikkeen vaikutusalue(et):</b>
+<b>Valitse liikkeen vaikutusalue:</b>
 <p>
-<input type="checkbox" name="muscles" value="kädet"> kädet
-<input type="checkbox" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
-<input type="checkbox" name="muscles" value="selkä"> selkä
-<input type="checkbox" name="muscles" value="vatsa"> vatsa
-<input type="checkbox" name="muscles" value="koko vartalo"> koko vartalo
+<input type="radio" name="muscles" value="kädet"> kädet
+<input type="radio" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
+<input type="radio" name="muscles" value="selkä"> selkä
+<input type="radio" name="muscles" value="vatsa"> vatsa
+<input type="radio" name="muscles" value="koko vartalo"> koko vartalo
 <p>
 <b>Liikkeen kuvaus ja lisähuomiot:</b>
 <p>
 <textarea name="description" rows="10" cols="50"></textarea>
 <p>
 <input type="submit" value="Luo">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-
+<p>
+<a href="/">Etusivulle</a>
+	
 {% endblock %}

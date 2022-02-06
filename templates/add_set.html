@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Treenisettien luominen</h2>
+<p>
+Valitse settiin lisättävät liikkeet. Voit lisätä yhteen settiin enintään 10 liikettä.
+<p>
+<p>
+<form action="/add_set" method="post">
+<b>Kädet</b>
+{% for move in arm_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+<input type="checkbox" name="chosen" value="{{ move.id }}">
+{% endfor %}
+</ul>
+<p>
+<b>Jalat ja pakarat</b>
+{% for move in leg_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+<input type="checkbox" name="chosen" value="{{ move.id }}">
+{% endfor %}
+</ul>
+<p>
+<b>Selkä</b>
+{% for move in back_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+<input type="checkbox" name="chosen" value="{{ move.id }}">
+{% endfor %}
+</ul>
+<p>
+<b>Vatsa</b>
+{% for move in abs_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+<input type="checkbox" name="chosen" value="{{ move.id }}">
+{% endfor %}
+</ul>
+<p>
+<b>Koko vartalo</b>
+{% for move in full_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+<input type="checkbox" name="chosen" value="{{ move.id }}">
+{% endfor %}
+</ul>
+<p>
+<h3>Treenisetin tiedot</h3>
+<b>Nimi:</b> <input type="text" name="name">
+<p>
+<p>
+<b>Kuvaus ja lisähuomiot:</b>
+<p>
+<textarea name="description" rows="10" cols="50"></textarea>
+<p>
+<input type="submit" value="Luo">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/">Etusivulle</a>
+{% endblock %}
+

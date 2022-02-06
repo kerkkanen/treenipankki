@@ -24,6 +24,11 @@ CREATE TABLE movesets (
     move_id INTEGER REFERENCES moves
 );
 
+CREATE TABLE favourite_sets (
+    user_id INTEGER REFERENCES users,
+    set_id INTEGER REFERENCES sets
+)
+
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,

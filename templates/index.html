@@ -4,16 +4,20 @@
 <h2>Tervetuloa treenipankkiin!</h2>
  
 {% if session.user_id %}
-Kirjautuneena:<b> {{ session.user_name }}</b><br>
+Kirjautuneena:<b> {{ session.user_name }}</b>
+<p>
+<a href="/profile/{{ session.user_id }}">Oma sivu</a>
+<p>
 <a href="/logout">Kirjaudu ulos</a>
 <p>
-<a href="/add_move">Lisää treeniliikkeitä pankiin</a> 
+<h3>Lisää sisältöä pankkiin</h3>
+<a href="/add_move">Uusi harjoitusliike</a>
 <p>
-<a href="/own_sets">Omat treenisetit</a>
-
+<a href="/add_set">Uusi treenisetti</a>
 {% else %}
 <p>
-Kirjautuneena käyttäjänä voit lisätä harjoituksia kaikkien nähtäville sekä tallettaa omat suosikkitreenisettisi.
+Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikkien nähtäville sekä tallettaa omat suosikkitreenisettisi.
+<p>
 <p>
 <h3>Kirjaudu sisään</h3>
 <p>
@@ -28,21 +32,10 @@ Salasana: <input type="password" name="password">
 tai luo <a href="/sign_up">uusi tunnus</a>.
 {% endif %}
 <p>
+<h3>Selaa treenipankin sisältöä</h3>
+<a href="/movelist">Yksittäiset harjoitusliikkeet</a>
 <p>
-<b>Käyttäjien luomia treenisettejä:</b>
-<ul>
-{% for sets in sets %}
-<li><a href="/set/{{ set.id }}">{{ set.name }}</a>
-{% endfor %}
-</ul>
-<p>
-<p>
-<b>Käyttäjien luomia treeniliikkeitä:</b>
-<ul>
-{% for move in moves %}
-<li><a href="/move/{{ move.id }}">{{ move.name }}</a>
-{% endfor %}
-</ul>
+<a href="/setlist">Treenisetit</a>
 
 
 {% endblock %}
