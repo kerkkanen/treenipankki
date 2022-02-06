@@ -4,7 +4,7 @@
 <h2>Tervetuloa treenipankkiin!</h2>
  
 {% if session.user_id %}
-Kirjautuneena:<b> {{ session.user_name }}</b>
+<b>Kirjautuneena:</b> {{ session.user_name }}
 <p>
 <a href="/profile/{{ session.user_id }}">Oma sivu</a>
 <p>
