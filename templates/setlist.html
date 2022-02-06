@@ -12,9 +12,12 @@ Täällä voit selata treenaajien pankkiin lisäämiä useamman harjoitusliikkee
 {% endfor %}
 </ul>
 {% if session.user_id %}
+<a href="/add_move">Lisää uusi liike</a>
+<p>
 <a href="/add_set">Lisää uusi setti</a>
 <p>
 {% endif %}
+<p>
 <a href="/">Etusivulle</a>
 
 {% endblock %}

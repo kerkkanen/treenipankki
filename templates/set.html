@@ -25,8 +25,9 @@
 <input type="submit" value="Lisää">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+<a href="/add_move">Lisää uusi liike</a>
 <p>
-<a href="/add_set">Lisää pankkiin uusi setti</a>
+<a href="/add_set">Lisää uusi setti</a>
 <p>
 <a href="/profile/{{ session.user_id }}">Omat suosikit</a>
 {% endif %}
