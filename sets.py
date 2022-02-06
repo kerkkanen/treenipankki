@@ -54,9 +54,9 @@ def get_one_set(set_id):
     sql = """SELECT * FROM sets WHERE sets.id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchone()
 
-def check_favourite_id(set_id):
-    sql = "SELECT * FROM favourite_sets WHERE set_id=:set_id"
-    result = db.session.execute(sql, {"set_id":set_id}).fetchall()
+def check_favourite_id(user_id, set_id):
+    sql = """SELECT * FROM favourite_sets WHERE user_id=:user_id AND set_id=:set_id"""
+    result = db.session.execute(sql, {"user_id":user_id, "set_id":set_id}).fetchall()
     if len(result) == 0:
         return True
     else:

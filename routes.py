@@ -150,11 +150,11 @@ def add_favourite():
         users.check_csrf()
 
         if request.method == "POST":
-            users.check_csrf()
+            
 
             set_id = request.form["add_set"]
 
-            if sets.check_favourite_id(set_id):
+            if sets.check_favourite_id(users.user_id(), set_id):
                 sets.add_favourite(users.user_id(), set_id)
 
             return redirect("/set/"+str(set_id))
