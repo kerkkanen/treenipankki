@@ -37,20 +37,18 @@ def sign_up():
 
     if request.method == "POST":
         name = request.form["name"]
-
-        if not 4 <= len(name) <= 20:
-            return render_template("error.html", message="Nimimerkin on oltava 4-20 merkkiä pitkä.")
-
         password = request.form["password"]
         password_again = request.form["password_again"]
-        if password != password_again:
-            return render_template("error.html", message="Salasanat eivät täsmää.")
-        if not 8 <= len(password) <= 50:
-            return render_template("error.html", message="Salasanan on oltava vähintään 8 merkkiä pitkä.")
 
-        if not users.sign_up(name, password):
-            return render_template("error.html", message="Tunnuksen luominen ei onnistunut.")
-        return redirect("/")
+        valid, error = users.validate(name, password, password_again)        
+        if not valid:
+            return render_template("error.html", message=error)
+
+        valid, error = users.sign_up(name, password)
+        if valid:
+            return redirect("/")
+        return render_template("error.html", message=error)
+        
 
 
 @app.route("/add_move", methods=["get", "post"])
@@ -63,8 +61,6 @@ def add_move():
 
         name = request.form["name"]
 
-        if moves.check_name(name):
-            return render_template("error.html", message=f"Pankista löytyy jo liike nimeltä {name}.")
         if len(name) < 4 or len(name) > 30:
             return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
 
@@ -96,8 +92,6 @@ def add_set():
 
         name = request.form["name"]
 
-        if sets.check_name(name):
-            return render_template("error.html", message=f"Pankista löytyy jo setti nimeltä {name}.")
         if len(name) < 4 or len(name) > 30:
             return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
 
@@ -131,13 +125,13 @@ def show_set(set_id):
     if request.method == "GET":
         info = sets.get_info(set_id)
         content = sets.get_content(set_id)
-        moveset_ids = sets.get_moveset_moves(set_id)
+        moveset_ids = sets.get_moves_in_set(set_id)
 
-        setmoves = []
+        moves_in_set = []
         for move_id in moveset_ids:
-            setmoves.append(moves.get_one_move(move_id[1]))
+            moves_in_set.append(moves.get_one_move(move_id[1]))
 
-        return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=setmoves)
+        return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=moves_in_set)
 
 
 @app.route("/add_favourite", methods=["get", "post"])
@@ -150,7 +144,6 @@ def add_favourite():
         users.check_csrf()
 
         if request.method == "POST":
-            
 
             set_id = request.form["add_set"]
 

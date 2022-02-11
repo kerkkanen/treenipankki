@@ -31,7 +31,7 @@ CREATE TABLE favourite_sets (
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
+    creator_id INTEGER REFERENCES users,
     set_id INTEGER REFERENCES sets,
     trainer_level TEXT,
     dumbells INTEGER,

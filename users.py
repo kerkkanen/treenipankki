@@ -1,4 +1,5 @@
 import os
+from sqlite3 import IntegrityError
 from db import db
 from flask import abort, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -26,17 +27,25 @@ def logout():
 def user_id():
     return session.get("user_id", 0)
 
+def validate(name, password, password_again):
+    if not 4 <= len(name) <= 20 or not 8 <= len(password) <= 50:
+            return False, "Nimimerkin on oltava 4-30 ja salasanan vähintään 8 merkkiä pitkä."
+    if password != password_again:
+        return False, "Salasanat eivät täsmää."
+    return True, ""
+
 
 def sign_up(name, password):
     hash_value = generate_password_hash(password)
-    try:
-        sql = """INSERT INTO users (name, password)
+    sql = """INSERT INTO users (name, password)
                  VALUES (:name, :password)"""
+    try:        
         db.session.execute(sql, {"name": name, "password": hash_value})
-        db.session.commit()
-    except:
-        return False
-    return login(name, password)
+        db.session.commit()        
+    except IntegrityError:
+        return False, "Nimimerkki on jo olemassa."
+    login(name, password)
+    return True, ""
 
 
 def check_csrf():

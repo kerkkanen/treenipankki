@@ -21,7 +21,7 @@ def add_set(creator_id, name, description):
 
 
 def add_moves_to_set(set_id, move_id):
-    sql = """INSERT INTO movesets (set_id, move_id)
+    sql = """INSERT INTO moves_in_set (set_id, move_id)
             VALUES (:set_id, :move_id)"""
     db.session.execute(sql, {"set_id": set_id, "move_id": move_id})
     db.session.commit()
@@ -37,8 +37,8 @@ def get_content(set_id):
     return db.session.execute(sql, {"set_id": set_id}).fetchone()
 
 
-def get_moveset_moves(set_id):
-    sql = """SELECT * FROM movesets WHERE set_id=:set_id"""
+def get_moves_in_set(set_id):
+    sql = """SELECT * FROM moves_in_set WHERE set_id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
 
 
