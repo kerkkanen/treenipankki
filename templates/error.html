@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h3>Virhe: {{ message }}</h3>
+<h3>{{ error }}</h3>
 <p>
 <a href="/">Etusivu</a>
 {% if session.user_id %}

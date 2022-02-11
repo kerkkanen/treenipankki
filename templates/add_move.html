@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="container">
+
 {% if session.user_id %}
 <h3>Lisää uusi liike pankkiin</h3>
 <p>
 <form action="/add_move" method="post">
-<b>Liikkeen nimi:</b> <input type="text" name="name">
-(Nimen oltava 4-30 merkkiä pitkä.)
+<label or="name"><b>Liikkeen nimi</b> (4-30 merkkiä):</label>
+ <input type="text"class="form-control" id="name" name="name">
 <p>
-<b>Valitse liikkeen vaikutusalue:</b>
+<label for="muscles"><b>Liikkeen vaikutusalue:</b></label>
 <p>
 <input type="radio" name="muscles" value="kädet"> kädet
 <input type="radio" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
@@ -16,15 +18,19 @@
 <input type="radio" name="muscles" value="vatsa"> vatsa
 <input type="radio" name="muscles" value="koko vartalo"> koko vartalo
 <p>
-<b>Liikkeen kuvaus ja lisähuomiot (max 2000 merkkiä):</b>
-<p>
+<label for="description"><b>Liikkeen kuvaus ja lisähuomiot</b> (max 2000 merkkiä):</label>
 <textarea name="description" rows="10" cols="50"></textarea>
 <p>
+
+{% if  error %}
+<p class="text-danger">{{ error }}</p>
+{% endif %}
+
 <input type="submit" value="Luo">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 {% endif %}
-<a href="/">Etusivulle</a>
+</div>
 	
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
+
 <div class="container">
 
 {% if  error %}
@@ -10,21 +11,17 @@
 <div class="row">
 <div class="col-5">
 
-<form action="sign_up" method="post">
-<label for="name">Nimimerkki (4-30 merkkiä):</label>
-<p>
+<form action="/login" method="post">
+<label for="name"> Nimimerkki: </label>
 <input type="text" class="form-control" id="name" name="name">
 <p>
-<label for="password">Salasana (vähintään 8 merkkiä): </label>
-<p>
+<label for="password">Salasana: </label>
 <input type="password" class="form-control" id="password" name="password">
 <p>
-<label for="password_again">Salasana uudelleen: </label>
-<p>
-<input type="password" class="form-control" id="password_again" name="password_again">
-<p>
-<input type="submit" value="Luo uusi tunnus">
+<input type="submit" value="Kirjaudu sisään">
 </form>
+<p>
+tai luo <a href="/sign_up">uusi tunnus</a>
 </div>
 </div>
 </div>

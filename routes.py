@@ -19,8 +19,10 @@ def login():
         name = request.form["name"]
         password = request.form["password"]
 
-        if not users.login(name, password):
-            return render_template("error.html", message="Väärä nimimerkki tai salasana.")
+        valid, error = users.login(name, password)
+
+        if not valid:
+            return render_template("login.html", error=error)
         return redirect("/")
 
 
@@ -40,15 +42,14 @@ def sign_up():
         password = request.form["password"]
         password_again = request.form["password_again"]
 
-        valid, error = users.validate(name, password, password_again)        
+        valid, error = users.validate(name, password, password_again)
         if not valid:
-            return render_template("error.html", message=error)
+            return render_template("sign_up.html", error=error)
 
         valid, error = users.sign_up(name, password)
         if valid:
             return redirect("/")
-        return render_template("error.html", message=error)
-        
+        return render_template("sign_up.html", error=error)
 
 
 @app.route("/add_move", methods=["get", "post"])
@@ -59,22 +60,23 @@ def add_move():
     if request.method == "POST":
         users.check_csrf()
 
+  
         name = request.form["name"]
-
-        if len(name) < 4 or len(name) > 30:
-            return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
-
         muscles = request.form["muscles"]
-        if len(muscles) == 0:
-            return render_template("error.html", message="Liikkeen vaikutusalue puuttuu.")
-
         description = request.form["description"]
-        if len(description) > 2000:
-            return render_template("error.html", message="Kuvaus ei voilla 2000 merkkiä pitempi.")
 
-        move_id = moves.add_move(users.user_id(), name, muscles, description)
+        valid, error = moves.validate(name, muscles, description)
 
-        return redirect("/move/"+str(move_id))
+  
+        if not valid:
+            return render_template("add_move.html", error=error)
+
+        valid, result = moves.add_move(
+            users.user_id(), name, muscles, description)
+        if not valid:
+            return render_template("add_move.html", error=result)
+
+        return redirect("/move/"+str(result))
 
 
 @app.route("/add_set", methods=["get", "post"])
@@ -91,24 +93,21 @@ def add_set():
         users.check_csrf()
 
         name = request.form["name"]
-
-        if len(name) < 4 or len(name) > 30:
-            return render_template("error.html", message="Nimen on oltava 4-30 merkkiä pitkä.")
-
         chosen = request.form.getlist("chosen")
-        if not 2 <= len(chosen) <= 10:
-            return render_template("error.html", message="Settiin voi valita 2-10 liikettä.")
-
         description = request.form["description"]
-        if len(description) > 2000:
-            return render_template("error.html", message="Kuvaus ei voilla 2000 merkkiä pitempi.")
 
-        set_id = sets.add_set(users.user_id(), name, description)
+        valid, error = sets.validate(name, chosen, description)
+        if not valid:
+            return render_template("add_set.html", error=error)
+
+        valid, result = sets.add_set(users.user_id(), name, description)
+        if not valid:
+            return render_template("add_set.html", error=result)
 
         for move_id in chosen:
-            sets.add_moves_to_set(set_id, move_id)
+            sets.add_moves_to_set(result, move_id)
 
-        return redirect("/set/"+str(set_id))
+        return redirect("/set/"+str(result))
 
 
 @app.route("/move/<int:move_id>")
@@ -163,7 +162,7 @@ def profile(id):
                 favourites.append(sets.get_one_set(set_id[1]))
             return render_template("profile.html", favourite_sets=favourites)
         else:
-            return render_template("error.html", messager="Käyttäjällä ei oikeutta sivulle.")
+            return render_template("error.html", error="Käyttäjällä ei oikeutta sivulle.")
 
 
 @app.route("/movelist", methods=["get"])

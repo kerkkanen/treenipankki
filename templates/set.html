@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="container">
 <h2>{{ name }}</h2>(<b>Lisääjä:</b>{{ creator }})
 <p>
 <b>Kuvaus</b>
@@ -33,7 +34,5 @@
 {% endif %}
 <p>
 <a href="/setlist">Settilistaan</a>
-<p>
-<a href="/">Etusivulle</a>
-
+</div>
 {% endblock %}

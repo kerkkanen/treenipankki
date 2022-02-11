@@ -1,22 +1,24 @@
 import os
-from sqlite3 import IntegrityError
+from sqlalchemy.exc import IntegrityError
 from db import db
 from flask import abort, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def login(name, password):
+    if name == "" or password == "":
+        return False, "Nimimerkki tai salasana ei voi olla tyhjä."
     sql = "SELECT password, id FROM users WHERE name=:name"
     result = db.session.execute(sql, {"name": name})
     user = result.fetchone()
     if not user:
-        return False
+        return False, "Väärä nimimerkki tai salasana."
     if not check_password_hash(user[0], password):
-        return False
+        return False, "Väärä nimimerkki tai salasana."
     session["user_id"] = user[1]
     session["user_name"] = name
     session["csrf_token"] = os.urandom(16).hex()
-    return True
+    return True, ""
 
 
 def logout():

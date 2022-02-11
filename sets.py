@@ -1,4 +1,5 @@
 from db import db
+from sqlalchemy.exc import IntegrityError
 
 
 def get_all():
@@ -11,13 +12,26 @@ def get_favouritelist(user_id):
     return db.session.execute(sql, {"user_id": user_id}).fetchall()
 
 
+def validate(name, chosen, description):
+    if len(name) < 4 or len(name) > 30:
+        return False, "Nimen on oltava 4-30 merkkiä pitkä."        
+    if not 2 <= len(chosen) <= 10:
+        return False, "Settiin on valittava 2-10 liikettä."        
+    if len(description) > 2000:
+        return False, "Kuvaus ei voi olla 2000 merkkiä pitempi."
+    return True, ""
+
 def add_set(creator_id, name, description):
     sql = """INSERT INTO sets (creator_id, name, description)
              VALUES (:creator_id, :name, :description) RETURNING id"""
-    set_id = db.session.execute(
-        sql, {"creator_id": creator_id, "name": name, "description": description}).fetchone()[0]
-    db.session.commit()
-    return set_id
+    try:
+        set_id = db.session.execute(
+            sql, {"creator_id": creator_id, "name": name, "description": description}).fetchone()[0]
+        db.session.commit()
+    except IntegrityError:
+        return False, f"Setti {name} on jo olemassa."
+    return True, set_id
+    
 
 
 def add_moves_to_set(set_id, move_id):

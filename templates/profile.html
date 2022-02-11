@@ -1,27 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Käyttäjän {{ session.user_name }} profiili</h2>
-<p>
-<p>
+<div class="container">
 
-<h3>Suosikkisettisi:</h3>
+<h3>Käyttäjän {{ session.user_name }} suosikkisetit</h3>
+<p>
 <ul>
 {% for set in favourite_sets %}
 <li><a href="/set/{{ set.id }}" title="set.description">{{ set.name }}</a>
 {% endfor %}
 </ul>
-<p>
-<a href="/add_move">Uusi liike</a>
-<p>
-<a href="/add_set">Uusi setti</a>
-<p>
-<a href="/setlist">Selaa valmiita settejä</a>
-<p>
-<a href="/">Etusivulle</a>
-<p>
-<a href="/logout">Kirjaudu ulos</a>
 
-
+</div>
 {% endblock %}
 

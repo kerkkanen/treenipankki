@@ -1,7 +1,26 @@
 <!doctype html>
+
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <title>Treenipankki</title>
-<h1>Treenipankki</h1>
-<hr>
+<nav class="navbar navbar-expand-sm navbar-light">
+<div class="container">
+<nav class="navbar navbar-expand-sm navbar-light">
+<a class="navbar-brand" href="/">Treenipankki</a>
+<ul class="navbar-nav">
+{% if not session.user_id %}
+<li class="nav-item"><a class="nav-link" href="/login">Kirjaudu sisään</a></li>
+<li class="nav-item"><a class="nav-link" href="/sign_up">Luo uusi tunnus</a></li>
+{% else %}  
+<li class="nav-item"><a class="nav-link" href="/add_move">Lisää liike</a></li>
+<li class="nav-item"><a class="nav-link" href="/add_set">Lisää setti</a></li>
+<li class="nav-item"><a class="nav-link" href="/profile/{{ session.user_id }}">Oma sivu</a></li>
+<li class="nav-item"><a class="nav-link" href="/logout">Kirjaudu ulos</a></li>
+{% endif %}
+</ul>
+</div>
+</nav>
+
 {% block content %}
 {% endblock %}
