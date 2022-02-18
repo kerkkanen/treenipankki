@@ -2,74 +2,84 @@
 {% block content %}
 
 <div class="container">
+<div class="row">
+<div class="col-10">
 
 {% if session.user_id %}
-<h2>Treenisettien luominen</h2>
+<h4>Lisää uusi setti pankkiin</h4>
 <p>
-Valitse settiin lisättävät liikkeet. Voit lisätä yhteen settiin enintään 10 liikettä.
+Valitse settiin lisättävät liikkeet. Voit valita yhteen settiin 2-10 liikettä.
 <p>
-<p>
+<ul>
 <form action="/add_set" method="post">
 <label><h5>Kädet</h5></label>
-<ul>
+<div class="form-group col-6">
 {% for move in arm_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 <input type="checkbox" name="chosen" value="{{ move.id }}">
 {% endfor %}
-</ul>
+</div>
 <p>
 <label><h5>Jalat ja pakarat</h5></label>
-<ul>
+<div class="form-group col-6">
 {% for move in leg_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 <input type="checkbox" name="chosen" value="{{ move.id }}">
 {% endfor %}
-</ul>
+</div>
 <p>
 <label><h5>Selkä</h5></label>
-<ul>
+<div class="form-group col-6">
 {% for move in back_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 <input type="checkbox" name="chosen" value="{{ move.id }}">
 {% endfor %}
-</ul>
+</div>
 <p>
 <label><h5>Vatsa</h5></label>
-<ul>
+<div class="form-group col-6">
 {% for move in abs_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 <input type="checkbox" name="chosen" value="{{ move.id }}">
 {% endfor %}
-</ul>
+</div>
 <p>
-<labe><h5>Koko vartalo</h5></label>
-<ul>
+<label><h5>Koko vartalo</h5></label>
+<div class="form-group col-6">
+<p>
 {% for move in full_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 <input type="checkbox" name="chosen" value="{{ move.id }}">
 {% endfor %}
+</div>
 </ul>
 <p>
-<h3>Treenisetin tiedot</h3>
+<h4>Treenisetin tiedot</h4>
 <p>
 {% if  error %}
 <p class="text-danger">{{ error }}</p>
 {% endif %}
 
-<label for="name">Nimi:</label>
+<div class="form-group col-6">
+<label for="name">Nimi (4-30 merkkiä):</label>
 <input type="text" class="form-control" id="name" name="name">
+</div>
 <p>
-<label for="description">Kuvaus ja lisähuomiot (max 2000 merkkiä):</label>
+<div class="form-group col-10">
+<label for="description">Kuvaus ja lisähuomiot (max 1000 merkkiä):</label>
+<textarea type="text" rows="10" class="form-control" name="description" id="description" required>{{request.form.description}}</textarea>
+</div>
 <p>
-<textarea name="description" rows="10" cols="50"></textarea>
-<p>
-<input type="submit" value="Luo">
+<div class="form-group col-6">
+<input type="submit" class="btn btn-success" value="Luo">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</div>
 </form>
 <p>
 {% endif %}
 
 </div>
-
+</div>
+</div>
 {% endblock %}
 

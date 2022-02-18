@@ -1,27 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>{{ name }}</h2>
+<div class="container">
+<h3>{{ name }}</h3>
 <p>
 (<b>Lisääjä: </b>{{ creator }})
 <p>
-<b>Lihasryhmä</b>
+<ul>
+<h5>Lihasryhmä:</h5>
 <p>
 <ul>{{ muscles }}</ul>
 <p>
-<b>Kuvaus</b>
+<h5>Kuvaus:</h5>
 <p>
 <ul>{{ description }}</ul>
+</ul>
 <p>
-<p>
-{% if session.user_id %}
-<a href="/add_move">Lisää uusi liike</a>
-<p>
-<a href="/add_set">LIsää uusi setti</a>
-<p>
-{% endif %}
-<a href="/movelist">Liikelistaan</a>
-<p>
-<a href="/">Palaa etusivulle</a>
-
+<a href="/movelist">Kaikki liikkeet</a>
+</div>
 {% endblock %}

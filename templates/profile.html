@@ -6,9 +6,13 @@
 <h3>Käyttäjän {{ session.user_name }} suosikkisetit</h3>
 <p>
 <ul>
+{% if added_sets %}
 {% for set in favourite_sets %}
-<li><a href="/set/{{ set.id }}" title="set.description">{{ set.name }}</a>
+<li><a href="/set/{{ set.id }}" title="set.description">{{ set.name }}</a></li>
 {% endfor %}
+{% else %}
+Ei vielä lisättyjä suosikkeja.
+{% endif %}
 </ul>
 
 </div>

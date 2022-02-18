@@ -1,22 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container"
-<h2>Treeniliikepankki</h2>
+<div class="container">
+
 <p>
-Täällä voit selata treenaajien pankkiin lisäämiä useamman harjoitusliikkeen settejä.
+<h4>Treenaajien pankkiin lisäämät setit:</h4>
 <p>
-<b>Käyttäjien luomia treenisettejä:</b>
 <ul>
 {% for set in sets %}
 <li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a>
 {% endfor %}
 </ul>
-{% if session.user_id %}
-<a href="/add_move">Lisää uusi liike</a>
-<p>
-<a href="/add_set">Lisää uusi setti</a>
-<p>
-{% endif %}
 </div>
 {% endblock %}

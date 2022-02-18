@@ -8,7 +8,7 @@ CREATE TABLE moves (
     id SERIAL PRIMARY KEY,
     creator_id INTEGER REFERENCES users,
     name VARCHAR (30) UNIQUE,
-    muscles TEXT,
+    muscles ARRAY,
     description TEXT
 );
 

@@ -3,20 +3,52 @@
 
 <div class="container">
 
-<h2>Treeniliikepankki</h2>
 <p>
-Täällä voit selata treenaajien pankkiin lisäämiä harjoitusliikkeitä.
+<h4>Treenaajien pankkiin lisäämät harjoitusliikkeet:</h4>
 <p>
-<b>Käyttäjien luomia treeniliikkeitä:</b>
+<label><h5>Kädet</h5></label>
+<div class="form-group col-6">
 <ul>
-{% for move in moves %}
-<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+{% for move in arm_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a></li>
 {% endfor %}
 </ul>
+</div>
 <p>
-{% if session.user_id %}
-<a href="/add_move">Lisää uusi liike</a>
+<label><h5>Jalat ja pakarat</h5></label>
+<div class="form-group col-6">
+<ul>
+{% for move in leg_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
 <p>
-{% endif %}
+<label><h5>Selkä</h5></label>
+<div class="form-group col-6">
+<ul>
+{% for move in back_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
+<p>
+<label><h5>Vatsa</h5></label>
+<div class="form-group col-6">
+<ul>
+{% for move in abs_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
+<p>
+<label><h5>Koko vartalo</h5></label>
+<div class="form-group col-6">
+<ul>
+{% for move in full_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
 </div>
 {% endblock %}

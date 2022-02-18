@@ -2,32 +2,44 @@
 {% block content %}
 
 <div class="container">
+<div class="row">
+<div class="col-10">
 
 {% if session.user_id %}
-<h3>Lisää uusi liike pankkiin</h3>
-<p>
-<form action="/add_move" method="post">
-<label or="name"><b>Liikkeen nimi</b> (4-30 merkkiä):</label>
- <input type="text"class="form-control" id="name" name="name">
-<p>
-<label for="muscles"><b>Liikkeen vaikutusalue:</b></label>
-<p>
-<input type="radio" name="muscles" value="kädet"> kädet
-<input type="radio" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
-<input type="radio" name="muscles" value="selkä"> selkä
-<input type="radio" name="muscles" value="vatsa"> vatsa
-<input type="radio" name="muscles" value="koko vartalo"> koko vartalo
-<p>
-<label for="description"><b>Liikkeen kuvaus ja lisähuomiot</b> (max 2000 merkkiä):</label>
-<textarea name="description" rows="10" cols="50"></textarea>
-<p>
+<h4>Lisää uusi liike pankkiin</h4>
 
+<p>
 {% if  error %}
 <p class="text-danger">{{ error }}</p>
 {% endif %}
+<p>
 
-<input type="submit" value="Luo">
+<form action="/add_move" method="post">
+<div class="form-group col-6">
+<label or="name"><b>Nimi</b> (4-30 merkkiä):</label>
+ <input type="text"class="form-control" id="name" name="name">
+</div>
+<p>
+<div class="form-group col-6">
+<label for="muscles"><b>Vaikutusalue:</b></label>
+<p>
+<input type="checkbox" name="muscles" value="kädet"> kädet
+<input type="checkbox" name="muscles" value="jalat ja pakarat"> jalat ja pakarat
+<input type="checkbox" name="muscles" value="selkä"> selkä
+<input type="checkbox" name="muscles" value="vatsa"> vatsa
+<input type="checkbox" name="muscles" value="koko vartalo"> koko vartalo
+</div>
+<p>
+<div class="form-group col-10">
+<label for="description"><b>Kuvaus ja lisähuomiot</b> (max 1000 merkkiä):</label>
+<textarea type="text" rows="10" class="form-control" name="description" id="description" required>{{request.form.description}}</textarea>
+</div>
+<p>
+
+<div class="form-group col-6">
+<input type="submit" class="btn btn-success" value="Luo">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</div>
 </form>
 <p>
 {% endif %}

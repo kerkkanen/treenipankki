@@ -7,8 +7,8 @@ def validate(name, muscles, description):
         return False, "Nimen on oltava 4-30 merkkiä pitkä."
     if len(muscles) == 0:
         return False, "Liikkeen vaikutusalue puuttuu."
-    if len(description) > 2000:
-        return False, "Kuvaus ei voi olla 2000 merkkiä pitempi."
+    if len(description) > 1000:
+        return False, "Kuvaus ei voi olla 1000 merkkiä pitempi."
     return True, ""
 
 
@@ -45,7 +45,7 @@ def get_all():
 
 
 def get_by_muscles(move_muscles):
-    sql = """SELECT * FROM moves WHERE moves.muscles=:move_muscles ORDER BY name"""
+    sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY name"""
     return db.session.execute(sql, {"move_muscles": move_muscles}).fetchall()
 
 

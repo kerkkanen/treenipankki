@@ -17,8 +17,8 @@ def validate(name, chosen, description):
         return False, "Nimen on oltava 4-30 merkkiä pitkä."        
     if not 2 <= len(chosen) <= 10:
         return False, "Settiin on valittava 2-10 liikettä."        
-    if len(description) > 2000:
-        return False, "Kuvaus ei voi olla 2000 merkkiä pitempi."
+    if len(description) > 1000:
+        return False, "Kuvaus ei voi olla 1000 merkkiä pitempi."
     return True, ""
 
 def add_set(creator_id, name, description):
@@ -81,3 +81,6 @@ def add_favourite(user_id, set_id):
              VALUES (:user_id, :set_id)"""
     db.session.execute(sql, {"user_id": user_id, "set_id": set_id})
     db.session.commit()
+
+def popular_sets():
+    pass

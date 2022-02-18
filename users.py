@@ -30,8 +30,8 @@ def user_id():
     return session.get("user_id", 0)
 
 def validate(name, password, password_again):
-    if not 4 <= len(name) <= 20 or not 8 <= len(password) <= 50:
-            return False, "Nimimerkin on oltava 4-30 ja salasanan vähintään 8 merkkiä pitkä."
+    if not 4 <= len(name) <= 20 or not 8 <= len(password):
+            return False, "Nimimerkin on oltava 4-20 ja salasanan vähintään 8 merkkiä pitkä."
     if password != password_again:
         return False, "Salasanat eivät täsmää."
     return True, ""

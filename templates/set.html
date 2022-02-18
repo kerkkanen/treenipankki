@@ -2,36 +2,39 @@
 {% block content %}
 
 <div class="container">
-<h2>{{ name }}</h2>(<b>Lisääjä:</b>{{ creator }})
+<h3>{{ name }}</h3>
 <p>
-<b>Kuvaus</b>
+(<b>Lisääjä: </b>{{ creator }})
+<p>
+<h5>Kuvaus</h5>
 <p>
 {{ description }}
 <p>
-<b>Liikkeet</b>
+<h5>Liikkeet</h5>
 <p>
 {% for move in moves %}
 <ul>
-<li><b>{{ move.name }}</b> ({{ move.muscles }})
+<li><b>{{ move.name }}</b>
+{% for muscle in move.muscles %}
+{{ muscle }}{% endfor %}
 <ul>
 {{ move.description }}
 </ul>
 </ul>
 {% endfor %}
-<p>
+{% if message %}
+<p class="text-success>{{ message }}</p>
+{% endif %}
 {% if session.user_id %}
+<div class="form-group col6">
 <form action="/add_favourite" method="post">
-<input type="radio" name="add_set" value="{{ id }}">Lisää omiin suosikkeihin
+<input type="radio" name="add_set" value="{{ id }}"> Lisää omiin suosikkeihin 
 <p>
-<input type="submit" value="Lisää">
+<input type="submit" class="btn btn-success" value="Lisää">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-<a href="/add_move">Lisää uusi liike</a>
-<p>
-<a href="/add_set">Lisää uusi setti</a>
-<p>
-<a href="/profile/{{ session.user_id }}">Omat suosikit</a>
 {% endif %}
+</div>
 <p>
 <a href="/setlist">Settilistaan</a>
 </div>
