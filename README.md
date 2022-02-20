@@ -7,7 +7,8 @@ Sovelluksesta voi hakea eri lihasryhmiä harjoittavia kuntoiluliikkeitä ja koos
 * Ilman kirjautumista on mahdollista selata ja tarkastella muiden lisäämiä yksittäisiä treeniliikkeitä sekä useammasta liikkeestä koostuvia treenisettejä.
 * Treenipankkiin voi luoda tunnuksen ja kirjautua sisään ja ulos.
 * Kirjautunut käyttäjä voi lisätä pankkiin yksittäisiä treeniliikkeitä sekä koostaa treeniliikkeistä useamman liikkeen setin.
-* Kirjautunut käyttäjä voi lisätä treenisetin suosikikseen. Suosikkisetit näkyvät käyttäjän omalla sivulla. 
+* Kirjautunut käyttäjä voi lisätä treenisetin suosikikseen. Suosikkisetit näkyvät käyttäjän omalla sivulla.
+* Pankkiin talletettuja liikkeitä voi selata ja hakea esim. kaikki tiettyä aluetta treenaavat liikket katseltavaksi.
 
 Tämänhetkistä versiota pääsee kokeilemaan Herokussa: https://treenipankki.herokuapp.com/
 
