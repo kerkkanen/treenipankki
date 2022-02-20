@@ -6,6 +6,9 @@ def get_all():
     sql = "SELECT * FROM sets ORDER BY name"
     return db.session.execute(sql).fetchall()
 
+def get_all_order_by_id():
+    sql = "SELECT * FROM sets ORDER BY id"
+    return db.session.execute(sql).fetchall()
 
 def get_favouritelist(user_id):
     sql = "SELECT * FROM favourite_sets WHERE user_id=:user_id"
@@ -54,6 +57,10 @@ def get_content(set_id):
 def get_moves_in_set(set_id):
     sql = """SELECT * FROM moves_in_set WHERE set_id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
+
+def get_set_ids_by_move(move_id):
+    sql = """ SELECT * FROM moves_in_set WHERE move_id=:move_id"""
+    return db.session.execute(sql, {"move_id": move_id}).fetchall()
 
 
 def check_name(name):

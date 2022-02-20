@@ -4,12 +4,34 @@
 <div class="container">
 
 <p>
-<h4>Treenaajien pankkiin lisäämät setit:</h4>
-<p>
+<h4>Hae treenisettejä</h4>
+<p>Voit etsiä treenaajien lisäämiä settejä lihasryhmien perusteella. Nähtäville haetaan kaikki setit, joissa valittu alue on vaikutusalueena vähintään yhdessä liikkeessä.
+
+<form action="/setlist" method="post">
+<div class="form-group col-6">
+<label for="name"><h5>Haettavat alueet:</h5></label>
 <ul>
-{% for set in sets %}
-<li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a>
+<p><input type="radio" name="area" value="kädet"> kädet
+<p><input type="radio" name="area" value="jalat ja pakarat"> jalat
+<p><input type="radio" name="area" value="keskivartalo"> keskivartalo
+<p><input type="radio" name="area" value="koko vartalo"> koko vartalo
+<p>
+<h5>Tai:</h5>
+<p><input type="radio" name="area" value="all"> Näytä kaikki pankin setit
+<p>
+<input type="submit" class="btn btn-success" value="Hae">
+</ul>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</div>
+</form>
+
+<div class="form-group col-6">
+<h5>{{ message }}</h5>
+<ul>
+{% for set in searched_sets %}
+<li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
 {% endfor %}
 </ul>
+</div>
 </div>
 {% endblock %}

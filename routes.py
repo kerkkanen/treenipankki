@@ -8,10 +8,24 @@ import sets
 @app.route("/")
 def index():
 
-    popular_moves = []
-    popular_sets = sets.popular_sets()
+    latest_moves = []
+    latest_sets = []
 
-    return render_template("index.html")
+    movelist= moves.get_all_order_by_id()
+    movelist.reverse()
+    for move in movelist:
+        latest_moves.append(move)
+        if len(latest_moves) > 4:
+            break
+
+    setlist = sets.get_all_order_by_id()
+    setlist.reverse()
+    for set in setlist:
+        latest_sets.append(set)
+        if len(latest_sets) > 4:
+            break
+
+    return render_template("index.html", sets=latest_sets, moves=latest_moves)
 
 
 @app.route("/login", methods=["get", "post"])
@@ -82,13 +96,12 @@ def add_move():
 
 
 @app.route("/add_set", methods=["get", "post"])
-def add_set():    
+def add_set():
     arms = moves.get_by_muscles("kädet")
     legs = moves.get_by_muscles("jalat ja pakarat")
     backs = moves.get_by_muscles("selkä")
     abs = moves.get_by_muscles("vatsa")
     full = moves.get_by_muscles("koko vartalo")
-        
 
     if request.method == "GET":
         return render_template("add_set.html", arm_moves=arms, leg_moves=legs, back_moves=backs, abs_moves=abs, full_moves=full)
@@ -122,28 +135,24 @@ def show_move(move_id):
     for muscle in content[0]:
         muscles += f"{muscle}, "
     muscles = muscles[0:len(muscles)-2]
- 
+
     return render_template("move.html", id=move_id, name=info[0], creator=info[1], muscles=muscles, description=content[1])
 
 
 @app.route("/set/<int:set_id>", methods=["get", "post"])
 def show_set(set_id):
 
+    info = sets.get_info(set_id)
+    content = sets.get_content(set_id)
+    moveset_ids = sets.get_moves_in_set(set_id)
+
+    moves_in_set = []
+    for move_id in moveset_ids:
+        move = moves.get_one_move(move_id[1])
+        moves_in_set.append(move)
+
     if request.method == "GET":
-        info = sets.get_info(set_id)
-        content = sets.get_content(set_id)
-        moveset_ids = sets.get_moves_in_set(set_id)
-
-        moves_in_set = []
-        for move_id in moveset_ids:
-            move = moves.get_one_move(move_id[1])
-            moves_in_set.append(move)
-
         return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=moves_in_set)
-
-
-@app.route("/add_favourite", methods=["get", "post"])
-def add_favourite():
 
     if request.method == "POST":
         users.check_csrf()
@@ -152,13 +161,19 @@ def add_favourite():
 
         if sets.check_favourite_id(users.user_id(), set_id):
             sets.add_favourite(users.user_id(), set_id)
-        
-        message = "Setti talletettu omiin suosikkeihin!"
+            message = "Setti talletettu omiin suosikkeihin!"
+            return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=moves_in_set, message=message)
+        else:
+            error = "Setti on jo omissa suosikeissa."
+            return render_template("set.html", id=set_id, name=info[0], creator=info[1], description=content[0], moves=moves_in_set, error=error)
 
-        return redirect("/set/"+str(set_id))
+
+@app.route("/add_favourite", methods=["get", "post"])
+def add_favourite():
+    pass
 
 
-@app.route("/profile/<int:id>", methods=["get"])
+@app.route("/profile/<int:id>", methods=["get", "post"])
 def profile(id):
     if request.method == "GET":
         if users.user_id() == id:
@@ -181,12 +196,38 @@ def movelist():
         legs = moves.get_by_muscles("jalat ja pakarat")
         backs = moves.get_by_muscles("selkä")
         abs = moves.get_by_muscles("vatsa")
-        full = moves.get_by_muscles("koko vartalo")        
+        full = moves.get_by_muscles("koko vartalo")
 
         return render_template("movelist.html", arm_moves=arms, leg_moves=legs, back_moves=backs, abs_moves=abs, full_moves=full)
 
 
-@app.route("/setlist", methods=["get"])
+@app.route("/setlist", methods=["get", "post"])
 def setlist():
     if request.method == "GET":
         return render_template("setlist.html", sets=sets.get_all())
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        searched_moves = []
+
+        area = request.form["area"]
+        if area == "all":
+            return render_template("setlist.html", searched_sets=sets.get_all(), message="Kaikki setit:")
+        if area == "keskivartalo":
+            searched_moves = moves.get_by_muscles(
+                "vatsa") + moves.get_by_muscles("selkä")
+        else:
+            searched_moves = moves.get_by_muscles(area)
+
+        searched_sets_ids = []
+        searched_sets = []
+
+        for move_id in searched_moves:
+            searched_sets_ids = sets.get_set_ids_by_move(move_id[0])
+            for set_id in searched_sets_ids:
+                set = sets.get_one_set(set_id[0])
+                if set not in searched_sets:
+                    searched_sets.append(set)
+
+        return render_template("setlist.html", searched_sets=searched_sets, message="Hakutulos:")

@@ -7,13 +7,16 @@
 <p>
 <ul>
 {% if added_sets %}
+<form action="profile" methods="post">
 {% for set in favourite_sets %}
-<li><a href="/set/{{ set.id }}" title="set.description">{{ set.name }}</a></li>
+<li><a href="/set/{{ set.id }}" title="{{ set.description }}">{{ set.name }}</a></li>
 {% endfor %}
 {% else %}
 Ei vielä lisättyjä suosikkeja.
 {% endif %}
 </ul>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
 
 </div>
 {% endblock %}

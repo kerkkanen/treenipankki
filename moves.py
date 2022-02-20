@@ -43,6 +43,10 @@ def get_all():
     sql = """SELECT * FROM moves ORDER BY name"""
     return db.session.execute(sql).fetchall()
 
+def get_all_order_by_id():
+    sql = """SELECT * FROM moves ORDER BY id"""
+    return db.session.execute(sql).fetchall()
+
 
 def get_by_muscles(move_muscles):
     sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY name"""

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container" p-5>
+<div class="container">
 <h1>Tervetuloa treenipankkiin!</h1> 
 {% if session.user_id %}
 <b>Kirjautuneena:</b> {{ session.user_name }}
@@ -9,12 +9,23 @@
 Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikkien nähtäville sekä tallettaa omat suosikkitreenisettisi.
 {% endif %}
 <p>
-<h4>Etusivu kunnostuksen alla!</h4>
 <div class="row">
-<div class="col-6">
+<div class="col-5">
+<h5>Uusimmat lisätyt liikkeet</h5>
+<ul>
+{% for move in moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+{% endfor %}
+</ul>
 <a href="/movelist">Katso kaikki pankin harjoitusliikkeet</a>
 </div>
-<div class="col-6">
+<div class="col-5">
+<h5>Uusimmat lisätyt setit</h5>
+<ul>
+{% for set in sets %}
+<li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
+{% endfor %}
+</ul>
 <a href="/setlist">Katso kaikki pankin treenisetit</a>
 </div>
 </div>
