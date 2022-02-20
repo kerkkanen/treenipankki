@@ -188,6 +188,12 @@ def profile(id):
         else:
             return render_template("error.html", error="Käyttäjällä ei oikeutta sivulle.")
 
+    if request.method == "GET":
+        users.check_csrf()
+
+
+
+
 
 @app.route("/movelist", methods=["get"])
 def movelist():
@@ -207,8 +213,6 @@ def setlist():
         return render_template("setlist.html", sets=sets.get_all())
 
     if request.method == "POST":
-        users.check_csrf()
-
         searched_moves = []
 
         area = request.form["area"]
