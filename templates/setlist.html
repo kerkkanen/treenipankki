@@ -9,22 +9,36 @@
 
 <form action="/setlist" method="post">
 <div class="form-group col-6">
-<label for="name"><h5>Haettavat alueet:</h5></label>
+<label for="name"><h5>Hae alueen mukaan:</h5></label>
 <ul>
-<p><input type="radio" name="area" value="kädet"> kädet
-<p><input type="radio" name="area" value="jalat ja pakarat"> jalat
-<p><input type="radio" name="area" value="keskivartalo"> keskivartalo
-<p><input type="radio" name="area" value="koko vartalo"> koko vartalo
+<p><input type="radio" name="choise" value="kädet"> kädet
+<p><input type="radio" name="choise" value="jalat ja pakarat"> jalat
+<p><input type="radio" name="choise" value="keskivartalo"> keskivartalo
+<p><input type="radio" name="choise" value="koko vartalo"> koko vartalo
 <p>
+</ul>
+<label for="name"><h5>Hae liikkeiden määrän mukaan:</h5></label>
+<ul>
+<p><input type="radio" name="choise" value="2-3"> 2-3 liikettä 
+<p><input type="radio" name="choise" value="4-6"> 4-6 liikettä
+<p><input type="radio" name="choise" value="7-10"> yli 6 liikettä
+<p>
+</ul>
+
+
+
 <h5>Tai:</h5>
-<p><input type="radio" name="area" value="all"> Näytä kaikki pankin setit
+<p><input type="radio" name="choise" value="all"> Näytä kaikki pankin setit
 <p>
 <input type="submit" class="btn btn-success" value="Hae">
 </ul>
 </div>
 </form>
-
 <div class="form-group col-6">
+{% if error %}
+<p class="text-danger">{{ error }}</p>
+{% endif %}
+
 <h5>{{ message }}</h5>
 <ul>
 {% for set in searched_sets %}

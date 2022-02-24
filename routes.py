@@ -127,22 +127,22 @@ def show_set(set_id):
 
     set = sets.get_info(set_id)
 
+    favourite = sets.is_favourite(users.user_id(), set_id)
+
     if request.method == "GET":
-        return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id))
+        return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), favourite=favourite)
 
     if request.method == "POST":
         users.check_csrf()
 
-        set_id = request.form["add_set"]
-
-        if sets.check_favourite_id(users.user_id(), set_id):
+        favourite = sets.is_favourite(users.user_id(), set_id)
+        if not favourite:
             sets.add_favourite(users.user_id(), set_id)
-            message = "Setti talletettu omiin suosikkeihin!"
-            return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), message=message)
+            favourite = True
         else:
-            error = "Setti on jo omissa suosikeissa."
-            return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), error=error)
-
+            favourite = False
+            sets.delete(users.user_id(), set_id)
+    return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), favourite=favourite)
 
 
 @app.route("/profile/<int:id>", methods=["get", "post"])
@@ -156,9 +156,6 @@ def profile(id):
             return render_template("profile.html", favourite_sets=favourites, added_sets=added_sets)
         else:
             return render_template("error.html", error="Käyttäjällä ei oikeutta sivulle.")
-
-    if request.method == "GET":
-        users.check_csrf()
 
 
 @app.route("/movelist", methods=["get"])
@@ -174,29 +171,34 @@ def movelist():
 
 
 @app.route("/setlist", methods=["get", "post"])
-#TÄMÄ EI TOIMI KORJAA
 def setlist():
     if request.method == "GET":
         return render_template("setlist.html", sets=sets.get_all())
 
     if request.method == "POST":
 
-        searched_set_ids = []
-        area = request.form["area"]
-        if area == "all":
-            return render_template("setlist.html", searched_sets=sets.get_all(), message="Kaikki setit:")
-            
-        if area == "keskivartalo":
-            searched_set_ids = sets.get_searched_ids(
-                "vatsa") + sets.get_searched_ids("selkä")
-        else:
-            searched_set_ids = sets.get_searched_ids(area)
-
         searched_sets = []
 
-        for set_id in searched_set_ids:
-            set = sets.get_one_set(set_id[0])
-            if set not in searched_sets:
-                searched_sets.append(set)
+        if "choise" in request.form:
+            choise = request.form["choise"]
+            if choise == "2-3":
+                searched_sets = sets.get_searched_by_volume(2, 3)
+            if choise == "4-6":
+                searched_sets = sets.get_searched_by_volume(4, 6)
+            if choise == "7-10":
+                searched_sets = sets.get_searched_by_volume(7, 10)
+            if choise == "all":
+                return render_template("setlist.html", searched_sets=sets.get_all(), message="Kaikki setit:")
+            if choise == "keskivartalo":
+                searched_sets = sets.get_searched_by_area(
+                    "vatsa") + sets.get_searched_by_area("selkä")
+            else:
+                searched_sets = sets.get_searched_by_area(choise)
+        else:
+            return render_template("setlist.html", error="Valitse näytettävät.")
 
-        return render_template("setlist.html", searched_sets=searched_sets, message="Hakutulos:")
+        message = "Hakutulos:"
+        if len(searched_sets) == 0:
+            return render_template("setlist.html", error="Pankista ei löytynyt hakuehtoja täyttäviä settejä.")
+
+        return render_template("setlist.html", searched_sets=searched_sets, message=message)
