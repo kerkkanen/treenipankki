@@ -183,13 +183,13 @@ def setlist():
             choise = request.form["choise"]
             if choise == "2-3":
                 searched_sets = sets.get_searched_by_volume(2, 3)
-            if choise == "4-6":
+            elif choise == "4-6":
                 searched_sets = sets.get_searched_by_volume(4, 6)
-            if choise == "7-10":
+            elif choise == "7-10":
                 searched_sets = sets.get_searched_by_volume(7, 10)
-            if choise == "all":
+            elif choise == "all":
                 return render_template("setlist.html", searched_sets=sets.get_all(), message="Kaikki setit:")
-            if choise == "keskivartalo":
+            elif choise == "keskivartalo":
                 searched_sets = sets.get_searched_by_area(
                     "vatsa") + sets.get_searched_by_area("selkä")
             else:
