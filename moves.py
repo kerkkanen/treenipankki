@@ -43,3 +43,13 @@ def get_latest():
 def get_by_muscles(move_muscles):
     sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY name"""
     return db.session.execute(sql, {"move_muscles": move_muscles}).fetchall()
+
+
+def delete(move_id):
+    sql = """DELETE FROM moves WHERE moves.id=:move_id"""
+    db.session.execute(sql, {"move_id": move_id})
+    db.session.commit()
+
+def popular_moves():
+    sql = """SELECT * FROM moves WHERE id IN (select move_id FROM moves_in_set GROUP BY COUNT(move_id) BETWEEN :low and :high)"""
+    return db.session.execute(sql).fetchall()

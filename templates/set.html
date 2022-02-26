@@ -2,43 +2,106 @@
 {% block content %}
 
 <div class="container">
-<h3>{{ name }}</h3>
+<div class="row">
+<div class="col-5">
+<h3>{{ set[2] }}</h3>
 <p>
-(<b>Lisääjä: </b>{{ creator }})
+(<b>Lisääjä: </b>{{ set[5] }})
 <p>
 <h5>Kuvaus</h5>
 <p>
-{{ description }}
+{{ set[3] }}
 <p>
 <h5>Liikkeet</h5>
 <p>
+<ul>
 {% for move in moves %}
-<ul>
 <li><b>{{ move.name }}</b>
-{% for muscle in move.muscles %}
-{{ muscle }}{% endfor %}
-<ul>
+
+({% for muscle in move.muscles %}
+{{ muscle }}
+{% endfor %})
+<p>
 {{ move.description }}
-</ul>
-</ul>
 {% endfor %}
-{% if message %}
-<p class="text-success">{{ message }}</p>
+</ul>
+
+
+{% if session.user_id %}
+<form action="/set/{{ id }}" method="post">
+{% if favourite %}
+<input type="submit" class="btn btn-danger" value="Poista suosikeista">
+{% else %}
+<input type="submit" class="btn btn-success" value="Lisää suosikkeihin">
 {% endif %}
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+{% endif %}
+</div>
+
+<div class="col-4">
+{% if review %}
+<h4>Arvostelut ({{ volume }} kpl)</h4>
+{% if average %}
+<h5>keskiarvosana</b> {{ average }}/5</h5>
+<p>
+{% endif %}
+<p>
+{% for rev in review %}
+<b>{{ rev[0] }} ({{ rev[1] }}), arvosana {{ rev[2] }}:</b>
+<p>
+<ul><i>{{ rev[3] }}</i></ul>
+{% endfor %}
+<p>
+{% else %}
+<h5>Ei vielä arvosteluja.</h5>
+{% endif %}
+<br>
+</div>
+</div>
+
+
+
+{% if session.user_id %}
+<h5>Arvioi treenisetti:</h5>
 {% if error %}
 <p class="text-danger">{{ error }}</p>
 {% endif %}
-{% if session.user_id %}
-<div class="form-group col6">
-<form action="/set/{{ id }}" method="post">
-<input type="radio" name="add_set" value="{{ id }}"> Lisää omiin suosikkeihin 
+
+<form action="/review/{{ id }}" method="post">
+<div class="row">
+<div class="col-2">
+<label for="dumbells"><h6>Arvio</h6></label>
+<select name ="dumbells">
+<option value="1">1
+<option value="2">2
+<option value="3">3
+<option value="4">4
+<option value="5">5
+</select>
+</div>
+
+<div class="col-6">
+<label for="trainer"><h6>Oma taso</h6></label>
 <p>
-<input type="submit" class="btn btn-success" value="Lisää">
+<input type="radio" name="trainer" value="sohvaperuna"> sohvaperuna
+<input type="radio" name="trainer" value="sunnuntaihiihtelijä"> sunnuntaihiihteilijä
+<p>
+<input type="radio" name="trainer" value="perussporttaaja"> perussporttaaja
+<input type="radio" name="trainer" value="urheiluhullu"> urheiluhullu
+</div>
+</div>
+Sanallinen arvio (max 1000 merkkiä):
+<div class="col-7">
+<textarea type="text" rows="5" class="form-control" name="comment" id="comment" required>{{request.form.comment}}</textarea>
+<br>
+<input type="submit" value="Arvioi">
+<input type="hidden" name="set_id" value="{{ id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+</div>
 {% endif %}
 </div>
-<p>
-<a href="/setlist">Settilistaan</a>
-</div>
 {% endblock %}
+

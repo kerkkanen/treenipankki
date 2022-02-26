@@ -1,16 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h3>{{ error }}</h3>
-<p>
-<a href="/">Etusivu</a>
-{% if session.user_id %}
-<a href="/profile/{{ session.user_id }}">Oma sivu</a>
-<p>
-<a href="/add_move">Lisää liike</a>
-<a href="/add_set">Lisää setti</a>
-{% else %}
-<a href="/sign_up">Luo uusi tunnus</a>
-{% endif %}
+<div class="container">
+<h1>{{ error }}</h1>
+</div>
 
 {% endblock %}

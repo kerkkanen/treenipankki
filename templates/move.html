@@ -2,9 +2,9 @@
 {% block content %}
 
 <div class="container">
-<h3>{{ name }}</h3>
+<h3>{{ move[2] }}</h3>
 <p>
-(<b>Lisääjä: </b>{{ creator }})
+(<b>Lisääjä: </b>{{ move[6] }})
 <p>
 <ul>
 <h5>Lihasryhmä:</h5>
@@ -13,7 +13,7 @@
 <p>
 <h5>Kuvaus:</h5>
 <p>
-<ul>{{ description }}</ul>
+<ul>{{ move[4] }}</ul>
 </ul>
 <p>
 <a href="/movelist">Kaikki liikkeet</a>

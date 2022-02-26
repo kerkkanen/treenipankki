@@ -9,15 +9,20 @@
 <nav class="navbar navbar-expand-sm navbar-light">
 <a class="navbar-brand" href="/">Treenipankki</a>
 <ul class="navbar-nav">
-{% if not session.user_id %}
-<li class="nav-item"><a class="nav-link" href="/login">Kirjaudu sisään</a></li>
-<li class="nav-item"><a class="nav-link" href="/sign_up">Luo uusi tunnus</a></li>
-{% else %}  
+<li class="nav-item"><a class="nav-link" href="/movelist">Selaa liikkeitä</a></li>
+<li class="nav-item"><a class="nav-link" href="/setlist">Hae settejä</a></li>
+{% if session.user_id %}
 <li class="nav-item"><a class="nav-link" href="/add_move">Lisää liike</a></li>
 <li class="nav-item"><a class="nav-link" href="/add_set">Lisää setti</a></li>
-<li class="nav-item"><a class="nav-link" href="/setlist">Settihaku</a></li>
 <li class="nav-item"><a class="nav-link" href="/profile/{{ session.user_id }}">Omat suosikit</a></li>
 <li class="nav-item"><a class="nav-link" href="/logout">Kirjaudu ulos</a></li>
+{% if session.user_admin %}
+<li class="nav-item"><a class="nav-link" href="/admin">Admin-sivu</a></li>
+{% endif %}
+{% else %}
+<li class="nav-item"><a class="nav-link" href="/login">Kirjaudu sisään</a></li>
+<li class="nav-item"><a class="nav-link" href="/sign_up">Luo uusi tunnus</a></li>
+
 {% endif %}
 </ul>
 </div>
