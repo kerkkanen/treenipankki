@@ -87,12 +87,42 @@ def get_searched_by_area(area):
     sql = """SELECT * FROM sets WHERE id IN (SELECT set_id FROM moves_in_set WHERE move_id IN (SELECT moves.id FROM moves WHERE (:area)=ANY(muscles)))"""
     return db.session.execute(sql, {"area": area}).fetchall()
 
+
 def get_searched_by_volume(low, high):
-    sql = """SELECT * FROM sets WHERE id IN (select set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) BETWEEN low=:low and high=:high)"""
+    sql = """SELECT * FROM sets WHERE id IN (select set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) BETWEEN :low and :high)"""
     return db.session.execute(sql, {"low": low, "high": high}).fetchall()
 
 
-def delete(user_id, set_id):
+def delete_favourite(user_id, set_id):
     sql = """DELETE FROM favourite_sets WHERE user_id=:user_id AND set_id=:set_id"""
     db.session.execute(sql, {"user_id": user_id, "set_id": set_id})
+    db.session.commit()
+
+
+def get_reviews(set_id):
+    sql = """SELECT U.name, R.trainer_level, R.dumbells, R.comment FROM reviews R, users U WHERE R.creator_id = U.id AND R.set_id=:set_id"""
+    return db.session.execute(sql, {"set_id": set_id}).fetchall()
+
+
+def get_review_average(set_id):
+    sql = """SELECT AVG(dumbells) FROM reviews WHERE set_id=:set_id"""
+    return db.session.execute(sql, {"set_id": set_id}).fetchone()
+
+
+def get_review_volume(set_id):
+    sql = """SELECT COUNT(set_id) FROM reviews WHERE set_id=:set_id"""
+    return db.session.execute(sql, {"set_id": set_id}).fetchone()
+
+
+def add_review(creator_id, set_id, trainer_level, dumbells, comment):
+    sql = """INSERT INTO reviews (creator_id, set_id, trainer_level, dumbells, comment)
+             VALUES (:creator_id, :set_id, :trainer_level, :dumbells, :comment)"""
+    db.session.execute(
+        sql, {"creator_id": creator_id, "set_id": set_id, "trainer_level": trainer_level, "dumbells": dumbells, "comment": comment})
+    db.session.commit()
+
+
+def delete(set_id):
+    sql = """DELETE FROM sets WHERE sets.id=:set_id"""
+    db.session.execute(sql, {"set_id": set_id})
     db.session.commit()
