@@ -8,7 +8,7 @@ import sets
 @app.route("/")
 def index():
 
-    return render_template("index.html", sets=sets.get_latest(), moves=moves.get_latest())
+    return render_template("index.html", top_sets=sets.popular_sets(), sets=sets.get_latest(), top_moves=moves.popular_moves(), moves=moves.get_latest())
 
 
 @app.route("/login", methods=["get", "post"])

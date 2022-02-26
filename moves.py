@@ -51,5 +51,5 @@ def delete(move_id):
     db.session.commit()
 
 def popular_moves():
-    sql = """SELECT * FROM moves WHERE id IN (select move_id FROM moves_in_set GROUP BY COUNT(move_id) BETWEEN :low and :high)"""
+    sql = """SELECT * FROM moves WHERE moves.id IN (SELECT move_id FROM moves_in_set GROUP BY move_id ORDER BY COUNT(move_id) DESC LIMIT 3);"""
     return db.session.execute(sql).fetchall()

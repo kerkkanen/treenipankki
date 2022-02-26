@@ -80,7 +80,8 @@ def add_favourite(user_id, set_id):
 
 
 def popular_sets():
-    pass
+    sql = """SELECT * FROM sets WHERE sets.id IN (SELECT set_id FROM favourite_sets GROUP BY set_id ORDER BY COUNT(set_id) DESC LIMIT 3);"""
+    return db.session.execute(sql).fetchall()
 
 
 def get_searched_by_area(area):

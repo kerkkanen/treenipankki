@@ -17,6 +17,16 @@ Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikk
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 {% endfor %}
 </ul>
+
+
+<h5>TOP-3 suosituimmat liikkeet seteissä</h5>
+<ul>
+{% for move in top_moves %}
+<li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
+{% endfor %}
+</ul>
+
+
 <a href="/movelist">Katso kaikki pankin harjoitusliikkeet</a>
 </div>
 <div class="col-5">
@@ -26,6 +36,16 @@ Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikk
 <li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
 {% endfor %}
 </ul>
+
+
+<h5>TOP-3 omiin suosikkeihin listätyt setit</h5>
+<ul>
+{% for set in top_sets %}
+<li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
+{% endfor %}
+</ul>
+
+
 <a href="/setlist">Katso kaikki pankin treenisetit</a>
 </div>
 </div>
