@@ -119,18 +119,26 @@ def show_move(move_id):
         muscles += f"{muscle}, "
     muscles = muscles[0:len(muscles)-2]
 
-    return render_template("move.html", id=move_id, name=move[2], creator=move[6], muscles=muscles, description=move[4])
+    return render_template("move.html", id=move_id, move=move, muscles=muscles)
 
 
 @app.route("/set/<int:set_id>", methods=["get", "post"])
 def show_set(set_id):
 
     set = sets.get_info(set_id)
-
     favourite = sets.is_favourite(users.user_id(), set_id)
+    review = sets.get_reviews(set_id)
+    avg = sets.get_review_average(set_id)
+    volume = sets.get_review_volume(set_id)[0]
+    average = 0
+
+    try:
+        average = int(avg[0])
+    except TypeError:
+        average = ""
 
     if request.method == "GET":
-        return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), favourite=favourite)
+        return render_template("set.html", id=set_id, set=set, moves=sets.get_moves_in_set(set_id), favourite=favourite, review=review, average=average, volume=volume)
 
     if request.method == "POST":
         users.check_csrf()
@@ -141,8 +149,31 @@ def show_set(set_id):
             favourite = True
         else:
             favourite = False
-            sets.delete(users.user_id(), set_id)
-    return render_template("set.html", id=set_id, name=set[2], creator=set[5], description=set[3], moves=sets.get_moves_in_set(set_id), favourite=favourite)
+            sets.delete_favourite(users.user_id(), set_id)
+    return render_template("set.html", id=set_id, set=set, moves=sets.get_moves_in_set(set_id), favourite=favourite, review=review, averag=average, volume=volume)
+
+
+@app.route("/review/<int:set_id>", methods=["post"])
+def review(set_id):
+    users.check_csrf()
+
+    comment = request.form["comment"]
+
+    if "dumbells" not in request.form or "trainer" not in request.form or len(comment) > 1000:
+        set = sets.get_info(set_id)
+        favourite = sets.is_favourite(users.user_id(), set_id)
+        review = sets.get_reviews(set_id)
+        volume = sets.get_review_volume(set_id)[0]
+        avg = sets.get_review_average(set_id)
+        average = int(avg[0])
+        return render_template("set.html", id=set_id, set=set, moves=sets.get_moves_in_set(set_id), favourite=favourite, review=review, average=average, error="Täytä kaikki kohdat.", volume=volume)
+    else:
+        dumbells = request.form["dumbells"]
+        trainer = request.form["trainer"]
+
+        sets.add_review(users.user_id(), set_id,
+                        trainer, int(dumbells), comment)
+        return redirect("/set/"+str(set_id))
 
 
 @app.route("/profile/<int:id>", methods=["get", "post"])
@@ -202,3 +233,38 @@ def setlist():
             return render_template("setlist.html", error="Pankista ei löytynyt hakuehtoja täyttäviä settejä.")
 
         return render_template("setlist.html", searched_sets=searched_sets, message=message)
+
+
+@app.route("/admin", methods=["get", "post"])
+def admin():
+    move = moves.get_all()
+    set = sets.get_all()
+    user = users.get_all()
+
+    if request.method == "GET":
+        if users.user_admin():
+            return render_template("admin.html", move=move, set=set, user=user)
+        else:
+            return render_template("error.html", error="Käyttäjällä ei oikeutta sivulle.")
+
+    if request.method == "POST":
+        users.check_csrf()
+        error="Valitse poistettavat."
+
+        if "delete_move" in request.form:
+            delete = request.form.getlist("delete_move")
+            for move_id in delete:
+                moves.delete(move_id)
+            return redirect("/admin")
+        elif "delete_set" in request.form:
+            delete = request.form.getlist("delete_set")
+            for set_id in delete:
+                sets.delete(set_id)
+            return redirect("/admin")
+        elif "delete_user" in request.form:
+            delete = request.form.getlist("delete_user")
+            for user_id in delete:
+                users.delete(user_id)
+            return redirect("/admin")
+        else:
+            return render_template("admin.html", move=move, set=set, user=user, error=error)
