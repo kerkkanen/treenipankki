@@ -33,7 +33,7 @@ CREATE TABLE favourite_sets (
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     creator_id INTEGER REFERENCES users (id) ON DELETE CASCADE,
-    set_id INTEGER REFERENCES sets (id) ON DELETE CASCADE
+    set_id INTEGER REFERENCES sets (id) ON DELETE CASCADE,
     trainer_level TEXT,
     dumbells INTEGER,
     comment TEXT
