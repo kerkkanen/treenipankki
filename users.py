@@ -47,7 +47,7 @@ def validate(name, password, password_again):
 def sign_up(name, password):
     hash_value = generate_password_hash(password)
     sql = """INSERT INTO users (name, password, admin)
-                 VALUES (:name, :password, TRUE)"""
+                 VALUES (:name, :password, FALSE)"""
     try:
         db.session.execute(sql, {"name": name, "password": hash_value})
         db.session.commit()
