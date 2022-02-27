@@ -129,9 +129,9 @@ def show_set(set_id):
 
     set = sets.get_info(set_id)
     favourite = sets.is_favourite(users.user_id(), set_id)
-    review = sets.get_reviews(set_id)
-    avg = sets.get_review_average(set_id)
-    volume = sets.get_review_volume(set_id)[0]
+    review = reviews.get_reviews(set_id)
+    avg = reviews.get_review_average(set_id)
+    volume = reviews.get_review_volume(set_id)[0]
     average = 0
 
     try:
@@ -164,16 +164,16 @@ def review(set_id):
     if "dumbells" not in request.form or "trainer" not in request.form or len(comment) > 1000:
         set = sets.get_info(set_id)
         favourite = sets.is_favourite(users.user_id(), set_id)
-        review = sets.get_reviews(set_id)
-        volume = sets.get_review_volume(set_id)[0]
-        avg = sets.get_review_average(set_id)
+        review = reviews.get_reviews(set_id)
+        volume = reviews.get_review_volume(set_id)[0]
+        avg = reviews.get_review_average(set_id)
         average = int(avg[0])
         return render_template("set.html", id=set_id, set=set, moves=sets.get_moves_in_set(set_id), favourite=favourite, review=review, average=average, error="Täytä kaikki kohdat.", volume=volume)
     else:
         dumbells = request.form["dumbells"]
         trainer = request.form["trainer"]
 
-        sets.add_review(users.user_id(), set_id,
+        reviews.add_review(users.user_id(), set_id,
                         trainer, int(dumbells), comment)
         return redirect("/set/"+str(set_id))
 

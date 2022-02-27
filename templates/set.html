@@ -5,7 +5,7 @@
 <div class="row">
 <div class="col-5">
 <br>
-<h3{{ set[2] }}</h3>
+<h3>{{ set[2] }}</h3>
 <p>
 (<b>Lisääjä: </b>{{ set[5] }})
 <p>
@@ -43,6 +43,7 @@
 
 <div class="col-4">
 {% if review %}
+<br>
 <h4>Arvostelut ({{ volume }} kpl)</h4>
 {% if average %}
 <h5>keskiarvosana</b> {{ average }}/5</h5>
@@ -56,7 +57,8 @@
 {% endfor %}
 <p>
 {% else %}
-<h5>Ei vielä arvosteluja.</h5>
+<br>
+<h4>Ei vielä arvosteluja.</h4>
 {% endif %}
 <br>
 </div>
