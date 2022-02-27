@@ -106,6 +106,10 @@ def get_reviews(set_id):
     sql = """SELECT U.name, R.trainer_level, R.dumbells, R.comment FROM reviews R, users U WHERE R.creator_id = U.id AND R.set_id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
 
+def get_all_reviews():
+    sql = """SELECT * FROM reviews"""
+    return db.session.execute(sql).fetchall() 
+
 
 def get_review_average(set_id):
     sql = """SELECT AVG(dumbells) FROM reviews WHERE set_id=:set_id"""
