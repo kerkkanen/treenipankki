@@ -4,7 +4,7 @@ Sovellus on pankki lihaskuntoliikkeille ja treeniseteille. Sovelluksessa voi hak
 
 Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
 
-**Sovelluksen toiminnallisuudet**
+## Sovelluksen toiminnallisuudet
 
 * Ilman kirjautumista on mahdollista
    * selata kirjautuneiden käyttäjien lisäämiä yksittäisiä treeniliikkeitä ja niistä koostettuja settejä.
@@ -18,3 +18,11 @@ Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
       * poistaa suosikeiksi asettamiaan settejä suosikkilistalta.
       * arvioida minkä tahansa treenisetin.
 * Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja.
+
+## Jatkokehitysideoita
+
+* Käyttäjä voi muokata luomansa liikkeen sisältöä, esimerkiksi päivittämällä kuvausta.
+* Käyttä voi muokata luomansa setin sisältöä, esimerkiksi päivittämällä kuvausta tai vaihtamalla setin liikkeitä.
+* Käyttä voi poistaa luomansa treeniliikkeen.
+* Käyttäjä voi poistaa luomansa treenisestin.
+* Käyttäjä voi poistaa kirjoittamansa arvostelun.
