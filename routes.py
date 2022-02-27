@@ -3,7 +3,7 @@ from flask import render_template, request, redirect
 import users
 import moves
 import sets
-
+import reviews
 
 @app.route("/")
 def index():
@@ -242,10 +242,11 @@ def admin():
     move = moves.get_all()
     set = sets.get_all()
     user = users.get_all()
+    review = reviews.get_all_reviews()
 
     if request.method == "GET":
         if users.user_admin():
-            return render_template("admin.html", move=move, set=set, user=user)
+            return render_template("admin.html", move=move, set=set, user=user, review=review)
         else:
             return render_template("error.html", error="Käyttäjällä ei oikeutta sivulle.")
 
@@ -267,6 +268,11 @@ def admin():
             delete = request.form.getlist("delete_user")
             for user_id in delete:
                 users.delete(user_id)
+            return redirect("/admin")
+        elif "delete_review" in request.form:
+            delete = request.form.getlist("delete_review")
+            for review_id in delete:
+                reviews.delete(review_id)
             return redirect("/admin")
         else:
             return render_template("admin.html", move=move, set=set, user=user, error=error)

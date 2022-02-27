@@ -4,16 +4,13 @@
 <div class="container">
 <h1>Admin-sivu</h1>
 
-<div class="row">
-
 <form action="/admin" method="post">
-<div class="col-12">
+<div class="col-8">
 <h5>Liikkeet</h5>
 {% for m in move %}
 <li><input type="checkbox" name="delete_move" value="{{ m.id }}">
 <a href="/move/{{ m.id }}" title="{{ m.description }}"> {{ m.name }}</a>
 {% endfor %}
-
 <p>
 <input type="submit" class="btn btn-danger" value="Poista valitut">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -24,15 +21,13 @@
 </div>
 </form>
 
-
 <form action="/admin" method="post">
-<div class="col-12">
+<div class="col-8">
 <h5>Setit</h5>
 {% for s in set %}
 <li><input type="checkbox" name="delete_set" value="{{ s.id }}">
 <a href="/set/{{ s.id }}" title="{{ s.description }}"> {{ s.name }}</a>
 {% endfor %}
-
 <p>
 <input type="submit" class="btn btn-danger" value="Poista valitut">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -42,22 +37,36 @@
 </div>
 </form>
 
+<div class="col-8">
+
 <form action="/admin" method="post">
-<div class="col-12">
 <h5>Käyttäjät</h5>
 {% for u in user %}
 <li><input type="checkbox" name="delete_user" value="{{ u.id }}"> {{ u.name }}
 {% endfor %}
-
 <p>
 <input type="submit" class="btn btn-danger" value="Poista valitut">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 {% if error %}
 <p class="text-danger"> {{ error }}</p>
 {% endif %}
-
-</div>
 </form>
 </div>
+
+<div class="col-8">
+<form action="/admin" method="post">
+<h5>Arvostelut</h5>
+{% for r in review %}
+<li><input type="checkbox" name="delete_review" value="{{ r.id }}"> {{ r.comment }}
+{% endfor %}
+<p>
+<input type="submit" class="btn btn-danger" value="Poista valitut">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% if error %}
+<p class="text-danger"> {{ error }}</p>
+{% endif %}
+</form>
+</div>
+
 </div>
 {% endblock %}
