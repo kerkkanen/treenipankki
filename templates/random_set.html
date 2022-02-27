@@ -11,17 +11,13 @@
 </div>
 
 <form action="/random_set" method="post">
-<div class="row">
-<div class="col-3">
 <h5>Liikkeiden määrä:</h5>
 <ul>
 <p><input type="radio" name="volume" value="3"> 3
 <p><input type="radio" name="volume" value="4"> 4
 <p><input type="radio" name="volume" value="5"> 5
 </ul>
-</div>
 
-<div class="col-14">
 <h5>Alue:</h5>
 <ul>
 <p><input type="radio" name="area" value="kädet"> kädet
@@ -30,8 +26,6 @@
 <p><input type="radio" name="area" value="vatsa"> vatsa
 <p><input type="radio" name="area" value="koko vartalo"> koko vartalo
 </ul>
-</div>
-</div>
 <p>
 <input type="submit" class="btn btn-success" value="Arvo!">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
