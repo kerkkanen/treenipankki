@@ -45,10 +45,16 @@ def get_by_muscles(move_muscles):
     return db.session.execute(sql, {"move_muscles": move_muscles}).fetchall()
 
 
+def get_random_by_muscle(move_muscles, volume):
+    sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY RANDOM() LIMIT :volume"""
+    return db.session.execute(sql, {"move_muscles": move_muscles, "volume": volume}).fetchall()
+
+
 def delete(move_id):
     sql = """DELETE FROM moves WHERE moves.id=:move_id"""
     db.session.execute(sql, {"move_id": move_id})
     db.session.commit()
+
 
 def popular_moves():
     sql = """SELECT * FROM moves WHERE moves.id IN (SELECT move_id FROM moves_in_set GROUP BY move_id ORDER BY COUNT(move_id) DESC LIMIT 3);"""

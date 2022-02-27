@@ -24,6 +24,8 @@ def validate(name, chosen, description):
 
 
 def add_set(creator_id, name, description):
+    if len(name) < 4:
+        return False, "Nimen on oltava 4-30 merkkiä pitkä."
     sql = """INSERT INTO sets (creator_id, name, description)
              VALUES (:creator_id, :name, :description) RETURNING id"""
     try:
