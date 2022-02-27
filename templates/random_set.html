@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+<p>
+<h4>Arvo treeni</h4>
+<div class="col-8">
+<p>Anna algoritmin päättää tämän päivän treenisi! Jos pankissa ei ole toivottua määrää liikkeitä, haetaan aluen lisäksi kokovartaloliikkeitä. Jos niitäkään ei ole tarpeeksi - no, teet treenin useamman kerran!</p>
+<p> Valitse setin liikkeiden määrä ja alue, jolle haluat ensisijaisesti treenisi keskittää.</p>
+</div>
+
+<form action="/random_set" method="post">
+<div class="row">
+<div class="col-3">
+<h5>Liikkeiden määrä:</h5>
+<ul>
+<p><input type="radio" name="volume" value="3"> 3
+<p><input type="radio" name="volume" value="4"> 4
+<p><input type="radio" name="volume" value="5"> 5
+</ul>
+</div>
+
+<div class="col-14">
+<h5>Alue:</h5>
+<ul>
+<p><input type="radio" name="area" value="kädet"> kädet
+<p><input type="radio" name="area" value="jalat ja pakarat"> jalat
+<p><input type="radio" name="area" value="selkä"> selkä
+<p><input type="radio" name="area" value="vatsa"> vatsa
+<p><input type="radio" name="area" value="koko vartalo"> koko vartalo
+</ul>
+</div>
+</div>
+<p>
+<input type="submit" class="btn btn-success" value="Arvo!">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+
+{% if error %}
+<p class="text-danger">{{ error }}</p>
+{% endif %}
+
+
+<form action="/add_random" method="post">
+{% if random %}
+<h3>Puff!</h3>
+<p>
+<h5>Tässä treenisettisi:</h5>
+<p>
+<ul>
+
+<div class="form-group col-8">
+{% for move in moves %}
+<li><b>{{ move.name }}</b>
+({% for muscle in move.muscles %}
+{{ muscle }}
+{% endfor %})
+<p>
+{{ move.description }}
+{% endfor %}
+</ul>
+<p>
+
+{% if session.user_id %}
+{% if not added %}
+<br>
+<h5>Voit lisätä setin pankkiin kaikkien nähtäväksi lisäämällä nimen ja kuvauksen:</h5>
+<p>
+{% if other_error %}
+<p class="text-danger">{{ other_error }}
+{% endif %}
+<div class="form-group col-8">
+<label for="name">Nimi (4-30 merkkiä):</label>
+<input type="text" class="form-control" id="name" name="name" minlength="4" required>{{request.form.name}}
+<p>
+<label for="description">Kuvaus ja lisähuomiot (max 1000 merkkiä):</label>
+<textarea type="text" rows="10" class="form-control" name="description" id="description" required>{{request.form.description}}</textarea>
+<p>
+<input type="submit" class="btn btn-success" value="Lisää pankkiin">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="hidden" name="move_ids" value="{{ move_ids }}">
+<p>
+
+</form>
+{% endif %}
+{% endif %}
+{% endif %}
+</form>
+</div>
+{% endblock %}

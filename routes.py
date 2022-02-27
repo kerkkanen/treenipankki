@@ -8,7 +8,9 @@ import sets
 @app.route("/")
 def index():
 
-    return render_template("index.html", top_sets=sets.popular_sets(), sets=sets.get_latest(), top_moves=moves.popular_moves(), moves=moves.get_latest())
+    content = ["/movelist", "/setlist", "/random_set"]
+
+    return render_template("index.html", DropDownMenuLink=content, top_sets=sets.popular_sets(), sets=sets.get_latest(), top_moves=moves.popular_moves(), moves=moves.get_latest())
 
 
 @app.route("/login", methods=["get", "post"])
@@ -249,7 +251,7 @@ def admin():
 
     if request.method == "POST":
         users.check_csrf()
-        error="Valitse poistettavat."
+        error = "Valitse poistettavat."
 
         if "delete_move" in request.form:
             delete = request.form.getlist("delete_move")
@@ -268,3 +270,73 @@ def admin():
             return redirect("/admin")
         else:
             return render_template("admin.html", move=move, set=set, user=user, error=error)
+
+
+@app.route("/random_set", methods=["get", "post"])
+def random_set():
+
+    if request.method == "GET":
+        return render_template("random_set.html")
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        error = "Valitse liikkeiden määrä ja alue."
+        volume = 0
+        area = ""
+        if "area" not in request.form or "volume" not in request.form:
+            return render_template("random_set.html", error=error)
+        else:
+            volume = int(request.form["volume"])
+            area = request.form["area"]
+
+            move_ids = []
+            move_set = moves.get_random_by_muscle(area, volume)
+            full_body_moves = moves.get_random_by_muscle(
+                "koko vartalo", volume)
+
+            while len(move_set) < volume:
+                if len(full_body_moves) == 0:
+                    break
+                move = full_body_moves.pop()
+                if move not in move_set:
+                    move_set.append(move)
+
+            for move in move_set:
+                move_ids.append(move[0])
+
+        return render_template("random_set.html", moves=move_set, move_ids=move_ids, volume=volume, random=True)
+
+
+@app.route("/add_random", methods=["post"])
+def add_random():
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        name = request.form["name"]
+        moves = request.form.getlist("move_ids")
+        description = request.form["description"]
+
+        valid, result = sets.add_set(users.user_id(), name, description)
+        if not valid:
+            return render_template("random_set.html", error=result)
+
+        ids = []
+        moves = moves[0][1:-1]
+        temp = ""
+        for i in range(len(moves)):
+            print(i, (len(moves)))
+            if moves[i] == "," or moves[i] == "":
+                ids.append(int(temp))
+                temp = ""
+                continue
+            else:
+                temp += moves[i]
+                if i == len(moves)-1:
+                    ids.append(int(temp))
+
+        for move_id in ids:
+            sets.add_moves_to_set(result, move_id)
+
+        return redirect("/set/"+str(result))
