@@ -6,9 +6,10 @@
 <div class="col-10">
 
 {% if session.user_id %}
+<br>
 <h4>Lis채채 uusi setti pankkiin</h4>
 <p>
-Valitse settiin lis채tt채v채t liikkeet. Voit valita yhteen settiin 2-10 liikett채.
+Valitse settiin 2-10 liikett채. T채yt채 setin muuta tiedot sivun alalaidassa.
 <p>
 <ul>
 <form action="/add_set" method="post">
@@ -53,7 +54,7 @@ Valitse settiin lis채tt채v채t liikkeet. Voit valita yhteen settiin 2-10 liikett�
 {% endfor %}
 </div>
 </ul>
-<p>
+<br>
 <h4>Treenisetin tiedot</h4>
 <p>
 {% if  error %}
@@ -65,13 +66,13 @@ Valitse settiin lis채tt채v채t liikkeet. Voit valita yhteen settiin 2-10 liikett�
 <input type="text" class="form-control" id="name" name="name">
 </div>
 <p>
-<div class="form-group col-10">
+<div class="form-group col-8">
 <label for="description">Kuvaus ja lis채huomiot (max 1000 merkki채):</label>
 <textarea type="text" rows="10" class="form-control" name="description" id="description" required>{{request.form.description}}</textarea>
 </div>
 <p>
 <div class="form-group col-6">
-<input type="submit" class="btn btn-success" value="Luo">
+<input type="submit" class="btn btn-success" value="Lis채채">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </div>
 </form>

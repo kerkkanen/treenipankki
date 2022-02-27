@@ -2,6 +2,7 @@
 {% block content %}
 
 <div class="container">
+<br>
 <h1>Tervetuloa treenipankkiin!</h1> 
 {% if session.user_id %}
 <b>Kirjautuneena:</b> {{ session.user_name }}
@@ -11,43 +12,39 @@ Kirjautuneena käyttäjänä voit lisätä liikkeitä ja settejä pankkiin kaikk
 <p>
 <div class="row">
 <div class="col-5">
-<h5>Uusimmat lisätyt liikkeet</h5>
+<h5>Uusimmat liikkeet pankissa</h5>
 <ul>
 {% for move in moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 {% endfor %}
 </ul>
 
-
-<h5>TOP-3 suosituimmat liikkeet seteissä</h5>
+<h5>TOP-3 eniten setteihin lisätyt liikkeet</h5>
 <ul>
 {% for move in top_moves %}
 <li><a href="/move/{{ move.id }}" title="{{ move.description }}">{{ move.name }}</a>
 {% endfor %}
 </ul>
-
-
 <a href="/movelist">Katso kaikki pankin harjoitusliikkeet</a>
 </div>
+
 <div class="col-5">
-<h5>Uusimmat lisätyt setit</h5>
+<h5>Uusimmat setit pankissa</h5>
 <ul>
 {% for set in sets %}
 <li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
 {% endfor %}
 </ul>
 
-
-<h5>TOP-3 omiin suosikkeihin listätyt setit</h5>
+<h5>TOP-3 eniten omiin suosikkeihin listätyt setit</h5>
 <ul>
 {% for set in top_sets %}
 <li><a href="/set/{{ set.id }}" title=" {{ set.description }}">{{ set.name }}</a></li>
 {% endfor %}
 </ul>
-
-
 <a href="/setlist">Katso kaikki pankin treenisetit</a>
 </div>
 </div>
+
 </div>
 {% endblock %}

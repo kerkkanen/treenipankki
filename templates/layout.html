@@ -1,32 +1,42 @@
 <!doctype html>
 
+<body style="background-color:#eff9f6;">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <title>Treenipankki</title>
-<nav class="navbar navbar-expand-sm navbar-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-info">
 <div class="container">
 <nav class="navbar navbar-expand-sm navbar-light">
 <a class="navbar-brand" href="/">Treenipankki</a>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="nav-link" href="/movelist">Selaa liikkeitä</a></li>
-<li class="nav-item"><a class="nav-link" href="/setlist">Hae settejä</a></li>
-{% if session.user_id %}
-<li class="nav-item"><a class="nav-link" href="/add_move">Lisää liike</a></li>
-<li class="nav-item"><a class="nav-link" href="/add_set">Lisää setti</a></li>
-<li class="nav-item"><a class="nav-link" href="/profile/{{ session.user_id }}">Omat suosikit</a></li>
-<li class="nav-item"><a class="nav-link" href="/logout">Kirjaudu ulos</a></li>
-{% if session.user_admin %}
-<li class="nav-item"><a class="nav-link" href="/admin">Admin-sivu</a></li>
-{% endif %}
-{% else %}
+
+{% if not session.user_id %}
 <li class="nav-item"><a class="nav-link" href="/login">Kirjaudu sisään</a></li>
 <li class="nav-item"><a class="nav-link" href="/sign_up">Luo uusi tunnus</a></li>
 
+{% else %}
+<li class="nav-item"><a class="nav-link" href="/add_move">Lisää liike</a></li>
+<li class="nav-item"><a class="nav-link" href="/add_set">Lisää setti</a></li>
+<li class="nav-item"><a class="nav-link" href="/profile/{{ session.user_id }}">Omat suosikit</a></li>
 {% endif %}
-</ul>
+
+<li class="nav-item"><a class="nav-link" href="/movelist">Liikkeet</a></li>
+<li class="nav-item"><a class="nav-link" href="/setlist">Setit</a></li>
+<li class="nav-item"><a class="nav-link" href="/random_set">Arvo treeni</a></li>
+
+{% if session.user_admin %}
+<li class="nav-item"><a class="nav-link" href="/admin">Admin-sivu</a></li>
+{% endif %}
+
+{% if session.user_id %}
+<li class="nav-item"><a class="nav-link" href="/logout">Kirjaudu ulos</a></li>
+{% endif %}
+
 </div>
 </nav>
 
+
+</body>
 {% block content %}
 {% endblock %}

@@ -6,6 +6,7 @@
 <div class="col-10">
 
 {% if session.user_id %}
+<br>
 <h4>Lisää uusi liike pankkiin</h4>
 
 <p>
@@ -37,7 +38,7 @@
 <p>
 
 <div class="form-group col-6">
-<input type="submit" class="btn btn-success" value="Luo">
+<input type="submit" class="btn btn-success" value="Lisää">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </div>
 </form>
