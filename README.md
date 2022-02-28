@@ -19,7 +19,7 @@ Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
       * tallettaa omalle sivulleen suosikkisettinsä.
       * poistaa suosikeiksi asettamiaan settejä suosikkilistalta.
       * arvioida minkä tahansa treenisetin.
-* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja. Admin-tunnukset: admin, password
+* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja.Admin-ominaisuuksia pääsee testaamaan admin-tunnuksilla: admin, password
 
 ## Jatkokehitysideoita
 
