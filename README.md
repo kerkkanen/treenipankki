@@ -11,15 +11,15 @@ Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
 * Ilman kirjautumista on mahdollista
    * selata kirjautuneiden käyttäjien lisäämiä yksittäisiä treeniliikkeitä ja niistä koostettuja settejä.
    * hakea treenisettejä treenattavan alueen mukaan.
-   * arpoa satunnaisen harjoitussetin.
+   * arpoa satunnainen harjoitussetti.
 * Sovellukseen voi luoda tunnuksen ja kirjautua sisään ja ulos. Kirjautuminen tuo mukanaan lisää toiminnallisuutta.
 * Kirjautunut käyttäjä voi
-      * lisätä pankkiin yksittäisiä treeniliikkeitä
-      * lisätä pankkiin yksittäisistä liikkeistä koostuvia treenisettejä
-      * tallettaa omalle sivulleen suosikkisettinsä.
-      * poistaa suosikeiksi asettamiaan settejä suosikkilistalta.
-      * arvioida minkä tahansa treenisetin.
-* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja.Admin-ominaisuuksia pääsee testaamaan admin-tunnuksilla: admin, password
+    * lisätä pankkiin yksittäisiä treeniliikkeitä.
+    * lisätä pankkiin useista liikkeistä koostuvia treenisettejä.
+    * tallettaa omalle sivulleen suosikkisettinsä.
+    * poistaa suosikeiksi asettamiaan settejä omalta sivulta.
+    * arvioida minkä tahansa treenisetin.
+* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja. Admin-ominaisuuksia pääsee testaamaan admin-tunnuksilla: admin, password
 
 ## Jatkokehitysideoita
 
@@ -28,3 +28,4 @@ Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
 * Käyttä voi poistaa luomansa treeniliikkeen.
 * Käyttäjä voi poistaa luomansa treenisestin.
 * Käyttäjä voi poistaa kirjoittamansa arvostelun.
+* Liikken kuvaukseen voi liittää kuvan liikkeen asennosta.
