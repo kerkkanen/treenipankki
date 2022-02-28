@@ -1,3 +1,5 @@
+* Sovellus on tehty Helsingin yliopiston aineopintojen TKT20011 Tietokantasovellus -kurssin harjoitustyönä.*
+
 # Treenipankki
 
 Sovellus on pankki lihaskuntoliikkeille ja treeniseteille. Sovelluksessa voi hakea eri lihasryhmiä harjoittavia kuntoiluliikkeitä ja koostaa haluamanlaisensa harjoituksen. Kaikki käyttäjät voivat selata harjoitusliikkeitä ja treenisettejä sekä arpoa itselleen satunnaisen treenin. Kirjautunut käyttäjä voi lisätä harjoitusliikkeitä ja settejä sekä koota suosikkiharjoituksiaan omalle sivulle.
@@ -17,7 +19,7 @@ Sovellus toimii [Herokussa](https://treenipankki.herokuapp.com/).
       * tallettaa omalle sivulleen suosikkisettinsä.
       * poistaa suosikeiksi asettamiaan settejä suosikkilistalta.
       * arvioida minkä tahansa treenisetin.
-* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja.
+* Sovellukseen on olemassa myös admin-oikeudet. Admin pystyy poistamaan pankista yksittäisiä harjoituksia, settejä, käyttäjiä ja arvosteluja. Admin-tunnukset: admin, password
 
 ## Jatkokehitysideoita
 
