@@ -65,7 +65,7 @@ def get_one_set(set_id):
 
 
 def is_favourite(user_id, set_id):
-    sql = """SELECT * FROM favourite_sets WHERE set_id=:set_id AND user_id=:user_id """
+    sql = """SELECT set_id, user_id FROM favourite_sets WHERE set_id=:set_id AND user_id=:user_id """
     result = db.session.execute(
         sql, {"user_id": user_id, "set_id": set_id}).fetchall()
     if len(result) == 0:
@@ -82,17 +82,17 @@ def add_favourite(user_id, set_id):
 
 
 def popular_sets():
-    sql = """SELECT * FROM sets WHERE sets.id IN (SELECT set_id FROM favourite_sets GROUP BY set_id ORDER BY COUNT(set_id) DESC LIMIT 3);"""
+    sql = """SELECT id, creator_id, name, description FROM sets WHERE id IN (SELECT set_id FROM favourite_sets GROUP BY set_id ORDER BY COUNT(set_id) DESC LIMIT 3);"""
     return db.session.execute(sql).fetchall()
 
 
 def get_searched_by_area(area):
-    sql = """SELECT * FROM sets WHERE id IN (SELECT set_id FROM moves_in_set WHERE move_id IN (SELECT moves.id FROM moves WHERE (:area)=ANY(muscles)))"""
+    sql = """SELECT id, creator_id, name, description FROM sets WHERE id IN (SELECT set_id FROM moves_in_set WHERE move_id IN (SELECT moves.id FROM moves WHERE (:area)=ANY(muscles)))"""
     return db.session.execute(sql, {"area": area}).fetchall()
 
 
 def get_searched_by_volume(low, high):
-    sql = """SELECT * FROM sets WHERE id IN (select set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) BETWEEN :low and :high)"""
+    sql = """SELECT id, creator_id, name, description FROM sets WHERE id IN (select set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) BETWEEN :low and :high)"""
     return db.session.execute(sql, {"low": low, "high": high}).fetchall()
 
 
@@ -100,6 +100,7 @@ def delete_favourite(user_id, set_id):
     sql = """DELETE FROM favourite_sets WHERE user_id=:user_id AND set_id=:set_id"""
     db.session.execute(sql, {"user_id": user_id, "set_id": set_id})
     db.session.commit()
+
 
 def delete(set_id):
     sql = """DELETE FROM sets WHERE sets.id=:set_id"""

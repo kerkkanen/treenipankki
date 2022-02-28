@@ -63,7 +63,7 @@ def check_csrf():
 
 
 def get_all():
-    sql = """SELECT * FROM users WHERE admin = FALSE ORDER BY name"""
+    sql = """SELECT id, name, admin FROM users WHERE admin = FALSE ORDER BY name"""
     return db.session.execute(sql).fetchall()
 
 

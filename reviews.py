@@ -5,7 +5,7 @@ def get_reviews(set_id):
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
 
 def get_all_reviews():
-    sql = """SELECT * FROM reviews"""
+    sql = """SELECT id, creator_id, set_id, trainer_level, dumbells, comment FROM reviews"""
     return db.session.execute(sql).fetchall() 
 
 

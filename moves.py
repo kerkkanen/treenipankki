@@ -21,32 +21,32 @@ def add_move(creator_id, name, muscles, description):
 
 
 def get_info(move_id):
-    sql = """SELECT *, users.name FROM moves, users WHERE moves.id=:move_id AND moves.creator_id=users.id"""
+    sql = """SELECT M.id, M.creator_id, M.name, M.muscles, M.description, U.name FROM moves M, users U WHERE M.id=:move_id AND M.creator_id=U.id"""
     return db.session.execute(sql, {"move_id": move_id}).fetchone()
 
 
 def get_one_move(move_id):
-    sql = """SELECT * FROM moves WHERE moves.id=:move_id"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves WHERE moves.id=:move_id"""
     return db.session.execute(sql, {"move_id": move_id}).fetchone()
 
 
 def get_all():
-    sql = """SELECT * FROM moves ORDER BY name"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves ORDER BY name"""
     return db.session.execute(sql).fetchall()
 
 
 def get_latest():
-    sql = """SELECT * FROM moves ORDER BY id DESC LIMIT 5"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves ORDER BY id DESC LIMIT 5"""
     return db.session.execute(sql).fetchall()
 
 
 def get_by_muscles(move_muscles):
-    sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY name"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY name"""
     return db.session.execute(sql, {"move_muscles": move_muscles}).fetchall()
 
 
 def get_random_by_muscle(move_muscles, volume):
-    sql = """SELECT * FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY RANDOM() LIMIT :volume"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves WHERE (:move_muscles)=ANY(muscles) ORDER BY RANDOM() LIMIT :volume"""
     return db.session.execute(sql, {"move_muscles": move_muscles, "volume": volume}).fetchall()
 
 
@@ -57,5 +57,5 @@ def delete(move_id):
 
 
 def popular_moves():
-    sql = """SELECT * FROM moves WHERE moves.id IN (SELECT move_id FROM moves_in_set GROUP BY move_id ORDER BY COUNT(move_id) DESC LIMIT 3);"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves WHERE id IN (SELECT move_id FROM moves_in_set GROUP BY move_id ORDER BY COUNT(move_id) DESC LIMIT 3);"""
     return db.session.execute(sql).fetchall()
