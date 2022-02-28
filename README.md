@@ -1,4 +1,4 @@
-* Sovellus on tehty Helsingin yliopiston aineopintojen TKT20011 Tietokantasovellus -kurssin harjoitustyönä.*
+*Sovellus on tehty Helsingin yliopiston aineopintojen TKT20011 Tietokantasovellus -kurssin harjoitustyönä.*
 
 # Treenipankki
 
