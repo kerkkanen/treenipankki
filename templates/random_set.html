@@ -69,10 +69,10 @@
 <p class="text-danger">{{ other_error }}
 {% endif %}
 <div class="form-group col-8">
-<label for="name"><b>Setin nimi (4-30 merkkiä):</b></label>
+<label for="name"><b>Setin nimi</b> (4-30 merkkiä):</label>
 <input type="text" class="form-control" id="name" name="name" minlength="4" required>{{request.form.name}}
 <p>
-<label for="description"><b>Kuvaus ja lisähuomiot (max 1000 merkkiä):</b></label>
+<label for="description"><b>Kuvaus ja lisähuomiot</b> (max 1000 merkkiä):</label>
 <textarea type="text" rows="10" class="form-control" name="description" id="description" required>{{request.form.description}}</textarea>
 <p>
 <input type="submit" class="btn btn-success" value="Lisää pankkiin">
