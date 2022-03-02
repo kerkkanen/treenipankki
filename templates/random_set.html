@@ -36,6 +36,9 @@
 <p class="text-danger">{{ error }}</p>
 {% endif %}
 
+{% if message %}
+<p class="text-danger">{{ message }}</p>
+{% endif %}
 
 <form action="/add_random" method="post">
 {% if random %}

@@ -292,7 +292,6 @@ def random_set():
         return render_template("random_set.html")
 
     if request.method == "POST":
-        users.check_csrf()
 
         error = "Valitse liikkeiden määrä ja alue."
         volume = 0
@@ -307,6 +306,9 @@ def random_set():
             move_set = moves.get_random_by_muscle(area, volume)
             full_body_moves = moves.get_random_by_muscle(
                 "koko vartalo", volume)
+
+            if len(move_set) == 0:
+                return render_template("random_set.html", message="Pankissa ei ole vielä sopivia treeniliikkeitä.")
 
             while len(move_set) < volume:
                 if len(full_body_moves) == 0:
