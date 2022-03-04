@@ -2,11 +2,15 @@
 {% block content %}
 
 <div class="container">
+<br>
 <h1>Admin-sivu</h1>
 
 <form action="/admin" method="post">
 <div class="col-8">
 <h5>Liikkeet</h5>
+<p>
+Liikkeen poistaminen poistaa liikkeen kokonaan pankista. Jokaisessa setissä on luomisvaiheessa vähintään kaksi liikettä. Jos setin kaikki liikkeet poistetaan pankista, poistetaan myös setti automaattisesti.
+<p>
 {% for m in move %}
 <li><input type="checkbox" name="delete_move" value="{{ m.id }}">
 <a href="/move/{{ m.id }}" title="{{ m.description }}"> {{ m.name }}</a>
@@ -24,6 +28,9 @@
 <form action="/admin" method="post">
 <div class="col-8">
 <h5>Setit</h5>
+<p>
+Setin poistaminen poistaa valitun setin kokonaan pankista. Settiin valitut liikkeet eivät katoa pankista.
+<p>
 {% for s in set %}
 <li><input type="checkbox" name="delete_set" value="{{ s.id }}">
 <a href="/set/{{ s.id }}" title="{{ s.description }}"> {{ s.name }}</a>
@@ -41,6 +48,9 @@
 
 <form action="/admin" method="post">
 <h5>Käyttäjät</h5>
+<p>
+Käyttäjän poistaminen poistaa käyttäjän pankista niin, ettei käyttäjän ole enää mahdollista kirjautua palveluun. Käyttäjän poistaminen poistaa myös käyttäjän antamat settien arvostelut, sekä käyttäjän pankkiin lisäämät liikkeet ja setit.
+<p>
 {% for u in user %}
 <li><input type="checkbox" name="delete_user" value="{{ u.id }}"> {{ u.name }}
 {% endfor %}
@@ -56,6 +66,9 @@
 <div class="col-8">
 <form action="/admin" method="post">
 <h5>Arvostelut</h5>
+<p>
+Arvostelun poistaminen poistaa valitun arvostelun kokonaan pankista.
+<p>
 {% for r in review %}
 <li><input type="checkbox" name="delete_review" value="{{ r.id }}"> {{ r.comment }}
 {% endfor %}

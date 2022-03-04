@@ -50,6 +50,11 @@ def get_random_by_muscle(move_muscles, volume):
     return db.session.execute(sql, {"move_muscles": move_muscles, "volume": volume}).fetchall()
 
 
+def is_only_move_in_sets(move_id):
+    sql = """SELECT set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) = 1"""
+    return db.session.execute(sql).fetchall()
+
+
 def delete(move_id):
     sql = """DELETE FROM moves WHERE moves.id=:move_id"""
     db.session.execute(sql, {"move_id": move_id})

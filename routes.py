@@ -264,6 +264,9 @@ def admin():
         if "delete_move" in request.form:
             delete = request.form.getlist("delete_move")
             for move_id in delete:
+                one_move_sets = moves.is_only_move_in_sets(move_id)
+                for set in one_move_sets:
+                    sets.delete(set[0])
                 moves.delete(move_id)
             return redirect("/admin")
         elif "delete_set" in request.form:
@@ -275,6 +278,9 @@ def admin():
             delete = request.form.getlist("delete_user")
             for user_id in delete:
                 users.delete(user_id)
+                empty_sets = sets.sets_without_content()
+                for set in empty_sets:
+                    sets.delete(set[0])
             return redirect("/admin")
         elif "delete_review" in request.form:
             delete = request.form.getlist("delete_review")

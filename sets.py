@@ -8,12 +8,12 @@ def get_all():
 
 
 def get_latest():
-    sql = "SELECT * FROM sets ORDER BY id DESC LIMIT 5"
+    sql = "SELECT id, creator_id, name, description FROM sets ORDER BY id DESC LIMIT 5"
     return db.session.execute(sql).fetchall()
 
 
 def get_favourite_sets(user_id):
-    sql = """SELECT * FROM sets WHERE id IN (SELECT set_id FROM favourite_sets WHERE user_id=:user_id)"""
+    sql = """SELECT id, creator_id, name, description FROM sets WHERE id IN (SELECT set_id FROM favourite_sets WHERE user_id=:user_id)"""
     return db.session.execute(sql, {"user_id": user_id}).fetchall()
 
 
@@ -45,22 +45,22 @@ def add_moves_to_set(set_id, move_id):
 
 
 def get_info(set_id):
-    sql = """SELECT *, users.name FROM sets, users WHERE sets.id=:set_id AND sets.creator_id=users.id"""
+    sql = """SELECT S.id, S.creator_id, S.name, S.description, U.name FROM sets S, users U WHERE S.id=:set_id AND S.creator_id=U.id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchone()
 
 
 def get_moves_in_set(set_id):
-    sql = """SELECT * FROM moves WHERE id IN (SELECT move_id FROM moves_in_set WHERE set_id=:set_id)"""
+    sql = """SELECT id, creator_id, name, muscles, description FROM moves WHERE id IN (SELECT move_id FROM moves_in_set WHERE set_id=:set_id)"""
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
 
 
 def get_set_ids_by_move(move_id):
-    sql = """ SELECT * FROM moves_in_set WHERE move_id=:move_id"""
+    sql = """ SELECT set_id, move_id FROM moves_in_set WHERE move_id=:move_id"""
     return db.session.execute(sql, {"move_id": move_id}).fetchall()
 
 
 def get_one_set(set_id):
-    sql = """SELECT * FROM sets WHERE sets.id=:set_id"""
+    sql = """SELECT id, creator_id, name, description FROM sets WHERE sets.id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchone()
 
 
@@ -94,6 +94,10 @@ def get_searched_by_area(area):
 def get_searched_by_volume(low, high):
     sql = """SELECT id, creator_id, name, description FROM sets WHERE id IN (select set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) BETWEEN :low and :high)"""
     return db.session.execute(sql, {"low": low, "high": high}).fetchall()
+
+def sets_without_content():
+    sql = """SELECT id FROM sets WHERE id NOT IN (SELECT set_id FROM moves_in_set GROUP BY set_id HAVING COUNT(set_id) > 0)"""
+    return db.session.execute(sql).fetchall()
 
 
 def delete_favourite(user_id, set_id):
