@@ -45,7 +45,7 @@ def add_moves_to_set(set_id, move_id):
 
 
 def get_info(set_id):
-    sql = """SELECT S.id, S.creator_id, S.name, S.description, U.name FROM sets S, users U WHERE S.id=:set_id AND S.creator_id=U.id"""
+    sql = """SELECT S.id, S.creator_id, S.name, S.description, U.name FROM sets S JOIN users U ON S.creator_id=U.id WHERE S.id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchone()
 
 

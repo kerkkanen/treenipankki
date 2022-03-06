@@ -1,7 +1,7 @@
 from db import db
 
 def get_reviews(set_id):
-    sql = """SELECT U.name, R.trainer_level, R.dumbells, R.comment FROM reviews R, users U WHERE R.creator_id = U.id AND R.set_id=:set_id"""
+    sql = """SELECT U.name, R.trainer_level, R.dumbells, R.comment FROM reviews R JOIN users U ON R.creator_id = U.id  WHERE R.set_id=:set_id"""
     return db.session.execute(sql, {"set_id": set_id}).fetchall()
 
 def get_all_reviews():

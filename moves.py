@@ -21,7 +21,7 @@ def add_move(creator_id, name, muscles, description):
 
 
 def get_info(move_id):
-    sql = """SELECT M.id, M.creator_id, M.name, M.muscles, M.description, U.name FROM moves M, users U WHERE M.id=:move_id AND M.creator_id=U.id"""
+    sql = """SELECT M.id, M.creator_id, M.name, M.muscles, M.description, U.name FROM moves M JOIN users U ON M.creator_id=U.id WHERE M.id=:move_id"""
     return db.session.execute(sql, {"move_id": move_id}).fetchone()
 
 
